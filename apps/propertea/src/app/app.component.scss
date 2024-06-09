@@ -1,0 +1,9 @@
+.navbar-link {
+    &.active-link {
+        @apply bg-gray-900 text-white;
+    }
+
+    &:not(.active-link) {
+        @apply text-gray-300 hover:bg-gray-700 hover:text-white;
+    }
+}
