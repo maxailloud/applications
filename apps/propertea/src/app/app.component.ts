@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
     standalone: true,
     imports: [
         RouterModule,
-        NgIf
+        NgIf,
     ],
     selector: 'propertea-root',
     templateUrl: './app.component.html',
