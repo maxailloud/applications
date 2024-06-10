@@ -10,5 +10,11 @@ module.exports = {
     theme: {
         extend: {}
     },
-    plugins: []
+    plugins: [
+        require('daisyui')
+    ],
+    // daisyUI config -> https://daisyui.com/docs/config/
+    daisyui: {
+        themes: true, // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]
+    }
 };
