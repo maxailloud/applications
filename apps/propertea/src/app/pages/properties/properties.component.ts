@@ -7,7 +7,7 @@ import { ListComponent } from './list/list.component';
     standalone: true,
     imports: [
         ListComponent,
-        RouterOutlet
+        RouterOutlet,
     ],
     templateUrl: 'properties.component.html',
 })

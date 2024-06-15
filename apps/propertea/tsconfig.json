@@ -5,12 +5,14 @@
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
         "strict": true,
-        "noImplicitOverride": true,
-        "noPropertyAccessFromIndexSignature": true,
+        "noImplicitOverride": false, // false to remove error from @supabase/auth-js
+        "noPropertyAccessFromIndexSignature": false, // false to remove error from @supabase/auth-js
         "noImplicitReturns": true,
         "noFallthroughCasesInSwitch": true,
         "paths": {
             "@pages/*": ["apps/propertea/src/app/pages/*"],
+            "@services/*": ["apps/propertea/src/app/services/*"],
+            "@models/*": ["apps/propertea/src/app/models/*"],
         }
     },
     "files": [],

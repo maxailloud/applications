@@ -6,7 +6,7 @@ import { RouterLink } from '@angular/router';
     standalone: true,
     templateUrl: 'dashboard.component.html',
     imports: [
-        RouterLink
+        RouterLink,
     ]
 })
 export default class DashboardComponent {
