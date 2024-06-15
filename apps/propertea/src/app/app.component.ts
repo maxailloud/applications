@@ -1,8 +1,7 @@
 import { NgIf } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { SessionService } from '@services/session.service';
-import { SessionStore } from './store/session.store';
 
 @Component({
     standalone: true,
@@ -14,25 +13,23 @@ import { SessionStore } from './store/session.store';
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
     private sessionService = inject(SessionService);
-    private sessionStore = inject(SessionStore);
     private router = inject(Router);
 
     public mainMenuOpen = false;
-    public isUserAuthenticated = false;
+    public isSessionInitialised = this.sessionService.isSessionInitialised;
 
-    public ngOnInit(): void {
-        this.sessionService.authChanges((_, session) => {
-            console.log('change in authentication');
-            //this.session = session;
+    public constructor() {
+        this.sessionService.monitorAuthChanges();
+
+        effect(() => {
+            const isSessionInitialised = this.sessionService.isSessionInitialised();
+
+            if (!isSessionInitialised) {
+                void this.router.navigateByUrl('/login');
+            }
         });
-
-        if (!this.sessionService.isSessionInitialised()) {
-            void this.router.navigateByUrl('/login');
-        } else {
-            this.isUserAuthenticated = true;
-        }
     }
 
     public async logOut(): Promise<void> {

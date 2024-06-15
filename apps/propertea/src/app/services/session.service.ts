@@ -1,5 +1,4 @@
-import { inject, Injectable } from '@angular/core';
-import type { Subscription } from '@supabase/auth-js/src/lib/types';
+import { inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { AuthChangeEvent, AuthError, AuthOtpResponse, Session, SupabaseClient } from '@supabase/supabase-js';
 import { SessionStore } from '../store/session.store';
 
@@ -10,34 +9,26 @@ export class SessionService {
     private supabaseClient = inject(SupabaseClient);
     private sessionStore = inject(SessionStore);
 
-    private _isSessionInitialised = false;
+    public isSessionInitialised: WritableSignal<boolean> = signal(false);
 
     public initialiseSession(): Promise<void> {
         return this.supabaseClient.auth.getSession().then(({ data }) => {
             if (null !== data.session) {
-                this.setIsSessionInitialised(true);
+                this.isSessionInitialised.set(true);
                 this.sessionStore.setSession(data.session);
             }
         });
-
-        // use authChanges here to react to any auth changes
     }
 
-    public isSessionInitialised(): boolean {
-        return this._isSessionInitialised;
-    }
+    public monitorAuthChanges(): void {
+        this.supabaseClient.auth.onAuthStateChange((event: AuthChangeEvent, session: Session | null) => {
+            console.log(event);
+            console.log(session);
 
-    public setIsSessionInitialised(value: boolean): this {
-        this._isSessionInitialised = value;
-
-        return this;
-    }
-
-    public authChanges(callback: (event: AuthChangeEvent, session: Session | null) => void): {
-        data: { subscription: Subscription }
-    } {
-        // TODO: rewrite to use sessionStore
-        return this.supabaseClient.auth.onAuthStateChange(callback);
+            if (event === 'SIGNED_OUT') {
+                this.isSessionInitialised.set(false);
+            }
+        });
     }
 
     public signIn(email: string): Promise<AuthOtpResponse> {
