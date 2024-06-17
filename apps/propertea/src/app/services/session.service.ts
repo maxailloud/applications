@@ -22,9 +22,6 @@ export class SessionService {
 
     public monitorAuthChanges(): void {
         this.supabaseClient.auth.onAuthStateChange((event: AuthChangeEvent, session: Session | null) => {
-            console.log(event);
-            console.log(session);
-
             if (event === 'SIGNED_OUT') {
                 this.isSessionInitialised.set(false);
             }
