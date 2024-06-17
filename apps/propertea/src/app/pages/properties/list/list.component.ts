@@ -14,6 +14,6 @@ export default class ListComponent implements OnInit {
     private supabaseClient = inject(SupabaseClient);
 
     public ngOnInit(): void {
-        console.log('pouet');
+        console.log('list component');
     }
 }

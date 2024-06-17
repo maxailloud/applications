@@ -24,9 +24,7 @@ export class AppComponent {
         this.sessionService.monitorAuthChanges();
 
         effect(() => {
-            const isSessionInitialised = this.sessionService.isSessionInitialised();
-
-            if (!isSessionInitialised) {
+            if (!this.isSessionInitialised()) {
                 void this.router.navigateByUrl('/login');
             }
         });
