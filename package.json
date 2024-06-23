@@ -20,6 +20,8 @@
         "@nx/angular": "19.2.2",
         "@supabase/supabase-js": "^2.43.4",
         "daisyui": "^4.12.2",
+        "drizzle-orm": "^0.31.2",
+        "ngx-spinner": "^17.0.0",
         "rxjs": "~7.8.0",
         "tslib": "^2.3.0",
         "zone.js": "~0.14.3"
@@ -52,6 +54,7 @@
         "@typescript-eslint/parser": "^7.3.0",
         "@typescript-eslint/utils": "^8.0.0-alpha.28",
         "autoprefixer": "^10.4.0",
+        "drizzle-kit": "^0.22.7",
         "eslint": "~8.57.0",
         "eslint-config-prettier": "^9.0.0",
         "eslint-plugin-import": "^2.29.1",
