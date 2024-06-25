@@ -12,7 +12,7 @@ export class SessionService {
     public isSessionInitialised: WritableSignal<boolean> = signal(false);
 
     public initialiseSession(): Promise<void> {
-        return this.supabaseClient.auth.getSession().then(({ data }) => {
+        return this.supabaseClient.auth.getSession().then(({data}) => {
             if (null !== data.session) {
                 this.isSessionInitialised.set(true);
                 this.sessionStore.setSession(data.session);
@@ -29,7 +29,7 @@ export class SessionService {
     }
 
     public signIn(email: string): Promise<AuthOtpResponse> {
-        return this.supabaseClient.auth.signInWithOtp({ email });
+        return this.supabaseClient.auth.signInWithOtp({email});
     }
 
     public signOut(): Promise<{ error: AuthError | null }> {

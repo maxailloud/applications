@@ -1,11 +1,12 @@
 {
-    "name": "@my-apps/source",
+    "name": "@applications/source",
     "version": "0.0.0",
     "license": "MIT",
     "scripts": {
         "start": "nx serve --project",
         "serve": "nx serve --project",
-        "build": "nx build --prod --project"
+        "build": "nx build --prod --project",
+        "drizzle": "./scripts/drizzle.sh"
     },
     "private": true,
     "dependencies": {
