@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { SessionStore } from '../../store/session.store';
+import { SessionStore } from '@stores/session.store';
 
 @Component({
     selector: 'propertea-account',

@@ -1,6 +1,6 @@
 import { inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { AuthChangeEvent, AuthError, AuthOtpResponse, Session, SupabaseClient } from '@supabase/supabase-js';
-import { SessionStore } from '../store/session.store';
+import { SessionStore } from '@stores/session.store';
 
 @Injectable({
     providedIn: 'root',

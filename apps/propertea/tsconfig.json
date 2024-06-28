@@ -12,7 +12,7 @@
         "paths": {
             "@pages/*": ["apps/propertea/src/app/pages/*"],
             "@services/*": ["apps/propertea/src/app/services/*"],
-            "@models/*": ["apps/propertea/src/app/models/*"],
+            "@stores/*": ["apps/propertea/src/app/stores/*"],
         }
     },
     "files": [],
