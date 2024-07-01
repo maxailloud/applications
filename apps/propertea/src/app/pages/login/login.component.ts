@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SessionService } from '@services/session.service';
@@ -7,6 +7,7 @@ import { SessionService } from '@services/session.service';
     selector: 'propertea-login',
     standalone: true,
     templateUrl: './login.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
         ReactiveFormsModule,
     ],
@@ -16,7 +17,7 @@ export default class LoginComponent implements OnInit {
     private formBuilder = inject(FormBuilder);
     private router = inject(Router);
 
-    public loading = false;
+    public loading = signal<boolean>(false);
 
     public signInForm = this.formBuilder.group({
         email: '',
@@ -30,7 +31,7 @@ export default class LoginComponent implements OnInit {
 
     public async onSubmit (): Promise<void> {
         try {
-            this.loading = true;
+            this.loading.set(true);
 
             const email = this.signInForm.value.email as string;
             const { error } = await this.sessionService.signIn(email);
@@ -44,7 +45,7 @@ export default class LoginComponent implements OnInit {
             }
         } finally {
             this.signInForm.reset();
-            this.loading = false;
+            this.loading.set(false);
         }
     }
 }

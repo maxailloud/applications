@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SessionStore } from '@stores/session.store';
 
@@ -6,21 +6,18 @@ import { SessionStore } from '@stores/session.store';
     selector: 'propertea-account',
     standalone: true,
     templateUrl: './account.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
         ReactiveFormsModule,
     ],
 })
-export default class AccountComponent implements OnInit {
+export default class AccountComponent {
     private sessionStore = inject(SessionStore);
 
-    public email?: string;
+    public email = signal<string|undefined>(undefined);
 
-    public async ngOnInit(): Promise<void> {
-        await this.getProfile();
-    }
-
-    public async getProfile(): Promise<void> {
+    public constructor() {
         const { user } = this.sessionStore.getSession();
-        this.email = user.email;
+        this.email.set(user.email);
     }
 }

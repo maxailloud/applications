@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SupabaseClient } from '@supabase/supabase-js';
 
@@ -7,6 +7,7 @@ import { SupabaseClient } from '@supabase/supabase-js';
     standalone: true,
     templateUrl: 'list.component.html',
     styleUrl: 'list.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
         RouterLink,
     ]
@@ -14,7 +15,7 @@ import { SupabaseClient } from '@supabase/supabase-js';
 export default class ListComponent {
     private supabaseClient = inject(SupabaseClient);
 
-    public isLoading = true;
+    public isLoading = signal<boolean>(true);
     public properties = signal<{name: string; description: string}[]>([]);
 
     public loadProperties(): void {
@@ -24,6 +25,6 @@ export default class ListComponent {
                 description: '5350 Avenue Bourbonniere, H1X 2M9, Montreal QC, Canada'
             }
         ]);
-        this.isLoading = false;
+        this.isLoading.set(false);
     }
 }
