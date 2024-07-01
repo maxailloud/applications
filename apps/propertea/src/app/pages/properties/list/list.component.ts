@@ -1,9 +1,8 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { SupabaseClient } from '@supabase/supabase-js';
 
 @Component({
-    selector: 'propertea-properties-list',
+    selector: 'propertea-property-list',
     standalone: true,
     templateUrl: 'list.component.html',
     styleUrl: 'list.component.scss',
@@ -13,18 +12,19 @@ import { SupabaseClient } from '@supabase/supabase-js';
     ]
 })
 export default class ListComponent {
-    private supabaseClient = inject(SupabaseClient);
-
     public isLoading = signal<boolean>(true);
     public properties = signal<{name: string; description: string}[]>([]);
 
-    public loadProperties(): void {
+    public constructor() {
         this.properties.set([
             {
                 name: '1-5350 Avenue Bourbonniere',
                 description: '5350 Avenue Bourbonniere, H1X 2M9, Montreal QC, Canada'
             }
         ]);
-        this.isLoading.set(false);
+
+        setTimeout(() => {
+            this.isLoading.set(false);
+        }, 1000);
     }
 }

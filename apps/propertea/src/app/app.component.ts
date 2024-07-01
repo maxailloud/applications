@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component, effect, inject } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, effect, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { SessionService } from '@services/session.service';
 
@@ -12,6 +12,9 @@ import { SessionService } from '@services/session.service';
     selector: 'propertea-root',
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
+    schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+    ],
 })
 export class AppComponent {
     private sessionService = inject(SessionService);

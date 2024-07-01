@@ -25,7 +25,7 @@
                     }
                 ],
                 "styles": [
-                    "apps/propertea/src/styles.scss"
+                    "apps/propertea/src/styles.scss",
                 ],
                 "scripts": [],
                 "plugins": ["apps/propertea/env-var-plugin.js"]

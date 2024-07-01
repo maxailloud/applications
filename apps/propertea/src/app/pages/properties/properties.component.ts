@@ -3,7 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import ListComponent from './list/list.component';
 
 @Component({
-    selector: 'propertea-properties',
+    selector: 'propertea-property',
     standalone: true,
     templateUrl: 'properties.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,

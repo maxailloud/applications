@@ -30,5 +30,6 @@ export const appConfig: ApplicationConfig = {
             multi: true,
             deps: [SessionService],
         },
+
     ],
 };
