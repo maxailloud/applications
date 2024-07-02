@@ -1,5 +1,7 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { PropertyDataService } from '@data-services/property-data.service';
+import { SelectProperty } from '@schema/schema';
 
 @Component({
     selector: 'propertea-property-list',
@@ -11,20 +13,31 @@ import { RouterLink } from '@angular/router';
         RouterLink,
     ]
 })
-export default class ListComponent {
+export default class ListComponent implements OnInit {
+    public propertyDataService = inject(PropertyDataService);
+
     public isLoading = signal<boolean>(true);
-    public properties = signal<{name: string; description: string}[]>([]);
+    public properties = signal<SelectProperty[]>([]);
 
-    public constructor() {
-        this.properties.set([
-            {
-                name: '1-5350 Avenue Bourbonniere',
-                description: '5350 Avenue Bourbonniere, H1X 2M9, Montreal QC, Canada'
+    public async ngOnInit(): Promise<void> {
+        try {
+            const {data: properties, error, status} = await this.propertyDataService.readProperties();
+
+            if (error) {
+                console.error(error, status);
             }
-        ]);
 
-        setTimeout(() => {
+            if (properties) {
+                this.properties.set(properties);
+            }
+        } catch (error) {
+            if (error instanceof Error) {
+                console.error(error);
+            }
+
             this.isLoading.set(false);
-        }, 1000);
+        } finally {
+            this.isLoading.set(false);
+        }
     }
 }

@@ -20,32 +20,31 @@ import { SessionStore } from '@stores/session.store';
     ],
 })
 export default class CreateComponent {
-    public isLoading = signal<boolean>(false);
     public createPropertyForm = inject(PropertyFormFactory).createForm();
     public propertyDataService = inject(PropertyDataService);
     public sessionStore = inject(SessionStore);
 
+    public isLoading = signal<boolean>(false);
+
     public async createProperty(): Promise<void> {
-        console.log('createProperty');
-        console.log(this.createPropertyForm.value);
+        if (this.createPropertyForm.valid) {
+            try {
+                this.isLoading.set(true);
 
-        try {
-            this.isLoading.set(true);
+                await this.propertyDataService.createProperty(
+                    this.createPropertyForm.controls.name.value,
+                    this.createPropertyForm.controls.address.value,
+                    this.sessionStore.getSession().user.id,
+                );
+            } catch (error) {
+                if (error instanceof Error) {
+                    console.error(error);
+                }
 
-            const name = this.createPropertyForm.value.name as string;
-            const address = this.createPropertyForm.value.address as string;
-
-            const {error} = await this.propertyDataService.createProperty(name, address, this.sessionStore.getSession().user.id);
-
-            if (error) throw error;
-        } catch (error) {
-            if (error instanceof Error) {
-                alert(error.message);
+                this.isLoading.set(false);
+            } finally {
+                this.isLoading.set(false);
             }
-
-            this.isLoading.set(false);
-        } finally {
-            this.isLoading.set(false);
         }
     }
 }
