@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { InsertProperty, PROPERTY_TABLE_NAME, SelectProperty } from '@schema/schema';
+import { PROPERTY_TABLE_NAME, SelectProperty } from '@schema/schema';
 import { PostgrestSingleResponse, SupabaseClient } from '@supabase/supabase-js';
 
 @Injectable({
