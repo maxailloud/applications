@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS "property" (
-	"id" uuid PRIMARY KEY NOT NULL,
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"name" text NOT NULL,
 	"address" text NOT NULL,
 	"user_id" uuid NOT NULL,
