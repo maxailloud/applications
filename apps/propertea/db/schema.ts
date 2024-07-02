@@ -1,13 +1,16 @@
 import { integer, pgTable, serial, text, timestamp } from 'drizzle-orm/pg-core';
 
-export const userTable = pgTable('users_table', {
+export const USER_TABLE_NAME = 'property';
+export const userTable = pgTable(USER_TABLE_NAME, {
     id: serial('id').primaryKey(),
     name: text('name').notNull(),
 });
 
-export const propertyTable = pgTable('property', {
+export const PROPERTY_TABLE_NAME = 'property';
+export const propertyTable = pgTable(PROPERTY_TABLE_NAME, {
     id: serial('id').primaryKey(),
-    name: text('name'),
+    name: text('name').notNull(),
+    address: text('address').notNull(),
     userId: integer('user_id')
         .notNull()
         .references(() => userTable.id, {onDelete: 'cascade'}),

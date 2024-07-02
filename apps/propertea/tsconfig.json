@@ -13,6 +13,9 @@
             "@pages/*": ["apps/propertea/src/app/pages/*"],
             "@services/*": ["apps/propertea/src/app/services/*"],
             "@stores/*": ["apps/propertea/src/app/stores/*"],
+            "@factories/*": ["apps/propertea/src/app/factories/*"],
+            "@data-services/*": ["apps/propertea/src/app/data-services/*"],
+            "@schema/*": ["apps/propertea/db/*"],
         }
     },
     "files": [],
