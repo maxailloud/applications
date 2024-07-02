@@ -3,7 +3,6 @@ import {
     AuthChangeEvent,
     AuthError,
     AuthOtpResponse,
-    Session,
     SupabaseClient,
 } from '@supabase/supabase-js';
 import { SessionStore } from '@stores/session.store';
@@ -28,7 +27,7 @@ export class SessionService {
 
     public monitorAuthChanges(): void {
         this.supabaseClient.auth.onAuthStateChange(
-            (event: AuthChangeEvent, session: Session | null) => {
+            (event: AuthChangeEvent) => {
                 if (event === 'SIGNED_OUT') {
                     this.isSessionInitialised.set(false);
                 }

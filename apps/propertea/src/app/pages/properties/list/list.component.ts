@@ -19,7 +19,11 @@ export default class ListComponent implements OnInit {
     public isLoading = signal<boolean>(true);
     public properties = signal<SelectProperty[]>([]);
 
-    public async ngOnInit(): Promise<void> {
+    public ngOnInit(): void {
+        void this.refreshList();
+    }
+
+    private async refreshList(): Promise<void> {
         try {
             const {data: properties, error, status} = await this.propertyDataService.readProperties();
 
@@ -38,6 +42,18 @@ export default class ListComponent implements OnInit {
             this.isLoading.set(false);
         } finally {
             this.isLoading.set(false);
+        }
+    }
+
+    public async deleteProperty(propertyId: string): Promise<void> {
+        try {
+            await this.propertyDataService.deleteProperties(propertyId);
+
+            this.refreshList();
+        } catch (error) {
+            if (error instanceof Error) {
+                console.error(error);
+            }
         }
     }
 }

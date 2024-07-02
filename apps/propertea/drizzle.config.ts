@@ -10,6 +10,6 @@ export default defineConfig({
     schema: PROPERTEA_PROJECT_PATH + '/db/schema.ts',
     out: PROPERTEA_PROJECT_PATH + '/db/migrations',
     dbCredentials: {
-        url: process.env.PROPERTEA_SUPABASE_DATABASE_URL!,
+        url: process.env.PROPERTEA_SUPABASE_DATABASE_URL,
     },
 });
