@@ -4,7 +4,7 @@ import {
     ApplicationConfig,
     provideExperimentalZonelessChangeDetection,
 } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { SessionService } from '@services/session.service';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import initializeAppFactory from './app.factory';
@@ -12,7 +12,7 @@ import appRoutes from './app.routes';
 
 export const appConfig: ApplicationConfig = {
     providers: [
-        provideRouter(appRoutes),
+        provideRouter(appRoutes, withComponentInputBinding()),
         provideHttpClient(
             withFetch(),
         ),
