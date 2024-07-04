@@ -8,8 +8,9 @@ import { PostgrestSingleResponse, SupabaseClient } from '@supabase/supabase-js';
 export class PropertyDataService {
     private supabaseClient = inject(SupabaseClient);
 
-    public async createProperty(name: string, address: string, userId: string): Promise<PostgrestSingleResponse<SelectProperty[]>> {
-        return this.supabaseClient.from(PROPERTY_TABLE_NAME).insert({name, address, user_id: userId}).select();
+    public async createProperty(name: string, address: string, rent: number, userId: string):
+    Promise<PostgrestSingleResponse<SelectProperty>> {
+        return this.supabaseClient.from(PROPERTY_TABLE_NAME).insert({name, address, rent, user_id: userId}).select().single();
     }
 
     public async readProperty(propertyId: string): Promise<PostgrestSingleResponse<SelectProperty>> {
@@ -20,7 +21,7 @@ export class PropertyDataService {
         return this.supabaseClient.from(PROPERTY_TABLE_NAME).select();
     }
 
-    public async deleteProperties(propertyId: string): Promise<PostgrestSingleResponse<null>> {
+    public async deleteProperty(propertyId: string): Promise<PostgrestSingleResponse<null>> {
         return this.supabaseClient.from(PROPERTY_TABLE_NAME).delete().eq('id', propertyId);
     }
 }

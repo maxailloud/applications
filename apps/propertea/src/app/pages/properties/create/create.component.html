@@ -3,14 +3,14 @@
 <form class="flex flex-col items-center" [formGroup]="createPropertyForm" (submit)="createProperty()">
     <label class="form-control w-full max-w-xs" for="name">
         <div class="label">
-            <span class="label-text">Name of the property</span>
+            <span class="label-text">Name</span>
         </div>
         <input formControlName="name" id="name" type="text" class="input input-bordered w-full max-w-xs" required="required"/>
     </label>
 
     <label class="form-control w-full max-w-xl mt-4" for="address">
         <div class="label">
-            <span class="label-text">Address of the property</span>
+            <span class="label-text">Address</span>
         </div>
 
         <div class="input input-bordered flex items-center gap-2 w-full max-w-xl">
@@ -21,6 +21,13 @@
 
             <input formControlName="address" id="address" type="text" class="grow" required="required"/>
         </div>
+    </label>
+
+    <label class="form-control w-full max-w-xs mt-4" for="rent">
+        <div class="label">
+            <span class="label-text">Rent</span>
+        </div>
+        <input formControlName="rent" id="rent" type="number" class="input input-bordered w-full max-w-xs" required="required"/>
     </label>
 
     <div class="flex gap-4 mt-4">

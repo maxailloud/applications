@@ -32,9 +32,10 @@ export default class CreateComponent {
             try {
                 this.isLoading.set(true);
 
-                const { data: properties, error } = await this.propertyDataService.createProperty(
+                const { data: property, error } = await this.propertyDataService.createProperty(
                     this.createPropertyForm.controls.name.value,
                     this.createPropertyForm.controls.address.value,
+                    this.createPropertyForm.controls.rent.value,
                     this.sessionStore.getSession().user.id,
                 );
 
@@ -42,8 +43,8 @@ export default class CreateComponent {
                     console.error(error);
                 }
 
-                if (properties) {
-                    void this.router.navigate(['properties', 'detail', properties[0].id]);
+                if (property) {
+                    void this.router.navigate(['properties', 'detail', property.id]);
                 }
             } catch (error) {
                 if (error instanceof Error) {

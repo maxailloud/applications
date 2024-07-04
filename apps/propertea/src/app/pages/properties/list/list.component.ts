@@ -20,10 +20,10 @@ export default class ListComponent implements OnInit {
     public properties = signal<SelectProperty[]>([]);
 
     public ngOnInit(): void {
-        void this.refreshList();
+        void this.refreshProperties();
     }
 
-    private async refreshList(): Promise<void> {
+    private async refreshProperties(): Promise<void> {
         try {
             const {data: properties, error, status} = await this.propertyDataService.readProperties();
 
@@ -47,9 +47,9 @@ export default class ListComponent implements OnInit {
 
     public async deleteProperty(propertyId: string): Promise<void> {
         try {
-            await this.propertyDataService.deleteProperties(propertyId);
+            await this.propertyDataService.deleteProperty(propertyId);
 
-            this.refreshList();
+            await this.refreshProperties();
         } catch (error) {
             if (error instanceof Error) {
                 console.error(error);
