@@ -52,15 +52,18 @@
 
 <div role="tablist" class="tabs tabs-bordered">
     <a [routerLink]="[]" [relativeTo]="activatedRoute" role="tab" class="tab" [class.tab-active]="activeTab === tabTypes.Overview"
-            (click)="activateTab(tabTypes.Overview)">Overview</a>
+       (click)="activateTab(tabTypes.Overview)">Overview</a>
     @if (activeTab === tabTypes.Overview) {
         <div class="tab-content">
             Overview content
         </div>
     }
 
-    <a [routerLink]="[]" [relativeTo]="activatedRoute" [fragment]="tabTypes.Expenses" role="tab" class="tab"
-       [class.tab-active]="activeTab === tabTypes.Expenses" (click)="activateTab(tabTypes.Expenses)">Expenses</a>
+    <a [routerLink]="[]" [relativeTo]="activatedRoute" [fragment]="tabTypes.Expenses" role="tab" class="indicator tab"
+       [class.tab-active]="activeTab === tabTypes.Expenses" (click)="activateTab(tabTypes.Expenses)">
+        Expenses
+        <span class="indicator-item badge badge-accent">{{ expenses().length }}</span>
+    </a>
     @if (activeTab === tabTypes.Expenses) {
         <div class="tab-content p-10">
             <table class="table">
