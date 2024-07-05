@@ -3,6 +3,11 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ExpensesDataService } from '@data-services/expenses-data.service';
 import { SelectExpense, SelectProperty } from '@schema/schema';
 
+enum TabType {
+    Overview = 'overview',
+    Expenses = 'expenses',
+}
+
 @Component({
     selector: 'propertea-property-detail',
     standalone: true,
@@ -14,15 +19,30 @@ import { SelectExpense, SelectProperty } from '@schema/schema';
     ]
 })
 export default class DetailComponent implements OnInit {
-    private activatedRoute = inject(ActivatedRoute);
+    public activatedRoute = inject(ActivatedRoute);
     private expensesDataService = inject(ExpensesDataService);
 
     public isLoading = signal<boolean>(true);
     public property: SelectProperty;
     public expenses = signal<SelectExpense[]>([]);
 
+    public tabTypes = TabType;
+    public activeTab = this.tabTypes.Overview;
+
     public constructor() {
         this.property = this.activatedRoute.snapshot.data.property;
+
+        if (this.activatedRoute.snapshot.fragment) {
+            const fragment = this.activatedRoute.snapshot.fragment;
+
+            switch (fragment) {
+                case TabType.Expenses:
+                    this.activeTab = TabType.Expenses;
+                    break;
+                default:
+                    this.activeTab = TabType.Overview;
+            }
+        }
     }
 
     public async ngOnInit(): Promise<void> {
@@ -61,5 +81,9 @@ export default class DetailComponent implements OnInit {
                 console.error(error);
             }
         }
+    }
+
+    public activateTab(tabType: TabType): void {
+        this.activeTab = tabType;
     }
 }
