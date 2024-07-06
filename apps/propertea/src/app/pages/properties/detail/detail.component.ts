@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ExpensesDataService } from '@data-services/expenses-data.service';
 import { SelectExpense, SelectProperty } from '@schema/schema';
@@ -25,6 +25,17 @@ export default class DetailComponent implements OnInit {
     public isLoading = signal<boolean>(true);
     public property: SelectProperty;
     public expenses = signal<SelectExpense[]>([]);
+    public totalExpense = computed(() => this.expenses().reduce((previousValue, {amount}) => previousValue + parseFloat(amount), 0));
+    public toPayEveryMonth = computed(() => {
+        const totalExpenses = this.totalExpense();
+        const rent = parseFloat(this.property.rent);
+
+        if (totalExpenses > rent) {
+            return totalExpenses - rent;
+        }
+
+        return '+' + (rent - totalExpenses).toString();
+    });
 
     public tabTypes = TabType;
     public activeTab = this.tabTypes.Overview;

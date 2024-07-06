@@ -23,7 +23,7 @@
     </label>
 
     <div class="flex gap-4 mt-4">
-        <a [routerLink]="['/properties', 'detail', propertyId()]" class="btn btn-error">Cancel</a>
+        <a [routerLink]="['/properties', 'detail', propertyId()]" fragment="expenses" class="btn btn-error">Cancel</a>
         <button type="submit" class="btn btn-success">
             @if (isLoading()) {
                 <span class="loading loading-spinner"></span>

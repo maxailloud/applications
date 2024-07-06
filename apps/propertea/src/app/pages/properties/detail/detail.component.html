@@ -1,22 +1,5 @@
 <header class="flex">
     <h1 class="text-5xl font-bold">{{ property.name }}</h1>
-
-    <div class="tooltip ml-4" data-tip="Create an expense">
-        <a [routerLink]="['/properties', 'detail', property.id, 'expense-create']" class="btn btn-square">
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="size-8">
-                <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M12 4.5v15m7.5-7.5h-15"/>
-            </svg>
-        </a>
-    </div>
 </header>
 
 <p class="flex">
@@ -33,29 +16,31 @@
     <span>{{ property.address }}</span>
 </p>
 
-<p class="flex">
-    <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="1.5"
-        stroke="currentColor"
-        class="size-6">
-        <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-    </svg>
-
-    <span>{{ property.rent }}</span>
-</p>
-
 <div role="tablist" class="tabs tabs-bordered">
     <a [routerLink]="[]" [relativeTo]="activatedRoute" role="tab" class="tab" [class.tab-active]="activeTab === tabTypes.Overview"
        (click)="activateTab(tabTypes.Overview)">Overview</a>
     @if (activeTab === tabTypes.Overview) {
-        <div class="tab-content">
-            Overview content
+        <div class="tab-content p-4">
+            <p class="flex">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="size-6">
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                </svg>
+
+                <span>{{ property.rent }}$</span>
+            </p>
+
+            <p>Total expenses: {{ totalExpense() }}$</p>
+
+            <p>Result every month: {{ toPayEveryMonth() }}$</p>
         </div>
     }
 
@@ -65,7 +50,23 @@
         <span class="indicator-item badge badge-accent">{{ expenses().length }}</span>
     </a>
     @if (activeTab === tabTypes.Expenses) {
-        <div class="tab-content p-10">
+        <div class="tab-content p-4">
+            <a [routerLink]="['/properties', 'detail', property.id, 'expense-create']" class="btn">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="h-6 w-6">
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 4.5v15m7.5-7.5h-15"/>
+                </svg>
+                Add an expense
+            </a>
+
             <table class="table">
                 <thead>
                     <tr>

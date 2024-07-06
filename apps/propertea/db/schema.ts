@@ -11,7 +11,7 @@ export const propertyTable = pgTable(PROPERTY_TABLE_NAME, {
     id: uuid('id').primaryKey().defaultRandom(),
     name: text('name').notNull(),
     address: text('address').notNull(),
-    rent: numeric('rent', {precision: 9, scale: 2}),
+    rent: numeric('rent', {precision: 9, scale: 2}).notNull(),
     userId: uuid('user_id')
         .notNull()
         .references(() => userTable.id, {onDelete: 'cascade'}),
@@ -23,7 +23,7 @@ export const EXPENSE_TABLE_NAME = 'expense';
 export const expenseTable = pgTable(EXPENSE_TABLE_NAME, {
     id: uuid('id').primaryKey().defaultRandom(),
     name: text('name').notNull(),
-    amount: numeric('amount', {precision: 7, scale: 2}),
+    amount: numeric('amount', {precision: 7, scale: 2}).notNull(),
     propertyId: uuid('property_id')
         .notNull()
         .references(() => propertyTable.id, {onDelete: 'cascade'}),
