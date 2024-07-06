@@ -48,7 +48,7 @@ export default class ExpenseCreateComponent {
                 }
 
                 if (expense) {
-                    void this.router.navigate(['properties', 'detail', this.propertyId()]);
+                    void this.router.navigate(['properties', 'detail', this.propertyId()], {fragment: 'expenses'});
                 }
             } catch (error) {
                 if (error instanceof Error) {

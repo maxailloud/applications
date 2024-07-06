@@ -31,7 +31,7 @@ export default class DetailComponent implements OnInit {
         const rent = parseFloat(this.property.rent);
 
         if (totalExpenses > rent) {
-            return totalExpenses - rent;
+            return '-' + (totalExpenses - rent).toString();
         }
 
         return '+' + (rent - totalExpenses).toString();
