@@ -3,8 +3,8 @@
         <div class="navbar mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div class="inset-y-0 left-0 flex items-center sm:hidden" *ngIf="isSessionInitialised()">
                 <!-- Mobile menu button-->
-                <button type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-                        aria-controls="mobile-menu" aria-expanded="false" (click)="mainMenuOpen = !mainMenuOpen">
+                <button type="button" class="btn btn-circle"
+                        aria-controls="mobile-menu" [attr.aria-expanded]="mainMenuOpen" (click)="mainMenuOpen = !mainMenuOpen">
                     <span class="absolute -inset-0.5"></span>
                     <span class="sr-only">Open main menu</span>
                     <!--
@@ -44,7 +44,7 @@
 
             <div class="flex-none" *ngIf="isSessionInitialised()">
                 <div class="dropdown dropdown-end">
-                    <button tabindex="0" class="btn btn-ghost btn-circle avatar" aria-expanded="false" aria-haspopup="true">
+                    <button tabindex="0" class="btn btn-circle avatar" aria-expanded="false" aria-haspopup="true">
                         <span class="sr-only">Open user menu</span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-8 w-8 text-white">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
