@@ -1,4 +1,4 @@
-<h1 class="text-5xl font-bold">Property Creation</h1>
+<h1 class="text-5xl font-bold">{{ pageActionTitle() }}</h1>
 
 <form class="flex flex-col items-center" [formGroup]="createPropertyForm" (submit)="createProperty()">
     <label class="form-control w-full max-w-xs" for="name">
@@ -30,13 +30,20 @@
         <input formControlName="rent" id="rent" type="number" class="input input-bordered w-full max-w-xs" required="required"/>
     </label>
 
+    <label class="form-control w-full max-w-xs mt-4" for="mortgage">
+        <div class="label">
+            <span class="label-text">Mortgage</span>
+        </div>
+        <input formControlName="mortgage" id="mortgage" type="number" class="input input-bordered w-full max-w-xs" required="required"/>
+    </label>
+
     <div class="flex gap-4 mt-4">
         <a routerLink="/properties" class="btn btn-error">Cancel</a>
         <button type="submit" class="btn btn-success">
             @if (isLoading()) {
                 <span class="loading loading-spinner"></span>
             }
-            Create
+            {{ actionTitle() }}
         </button>
     </div>
 </form>

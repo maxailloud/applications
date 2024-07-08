@@ -1,9 +1,9 @@
 import { Route } from '@angular/router';
-import CreateComponent from '@pages/properties/create/create.component';
+import ExpenseCreateComponent from '@components/expense-create/expense-create.component';
+import CreateUpdateComponent from '@pages/properties/create-update/create-update.component';
 import DetailComponent from '@pages/properties/detail/detail.component';
 import ListComponent from '@pages/properties/list/list.component';
-import ExpenseCreateComponent from '../../components/expense-create/expense-create.component';
-import { propertyResolver } from '../../resolvers/property.resolver';
+import propertyResolver from '@resolvers/property.resolver';
 
 const propertiesRoutes: Route[] = [
     {
@@ -12,7 +12,14 @@ const propertiesRoutes: Route[] = [
     },
     {
         path: 'create',
-        component: CreateComponent,
+        component: CreateUpdateComponent,
+    },
+    {
+        path: 'update/:propertyId',
+        component: CreateUpdateComponent,
+        resolve: {
+            property: propertyResolver,
+        }
     },
     {
         path: 'detail/:propertyId',

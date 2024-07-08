@@ -27,7 +27,7 @@ export default class DetailComponent implements OnInit {
     public expenses = signal<SelectExpense[]>([]);
     public totalExpense = computed(() => this.expenses().reduce((previousValue, {amount}) => previousValue + parseFloat(amount), 0));
     public toPayEveryMonth = computed(() => {
-        const totalExpenses = this.totalExpense();
+        const totalExpenses = this.totalExpense() + parseFloat(this.property.mortgage);
         const rent = parseFloat(this.property.rent);
 
         if (totalExpenses > rent) {

@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, RedirectCommand, ResolveFn, Router } from '@ang
 import { PropertyDataService } from '@data-services/property-data.service';
 import { SelectProperty } from '@schema/schema';
 
-export const propertyResolver: ResolveFn<SelectProperty> = async (
+const propertyResolver: ResolveFn<SelectProperty> = async (
     route: ActivatedRouteSnapshot,
 ) => {
     const propertyId = route.paramMap.get('propertyId');
@@ -21,3 +21,5 @@ export const propertyResolver: ResolveFn<SelectProperty> = async (
 
     return property;
 };
+
+export default propertyResolver;

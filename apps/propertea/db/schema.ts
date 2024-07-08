@@ -12,6 +12,7 @@ export const propertyTable = pgTable(PROPERTY_TABLE_NAME, {
     name: text('name').notNull(),
     address: text('address').notNull(),
     rent: numeric('rent', {precision: 9, scale: 2}).notNull(),
+    mortgage: numeric('mortgage', {precision: 9, scale: 2}).notNull(),
     userId: uuid('user_id')
         .notNull()
         .references(() => userTable.id, {onDelete: 'cascade'}),
