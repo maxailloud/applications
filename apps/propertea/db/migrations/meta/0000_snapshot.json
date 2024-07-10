@@ -1,5 +1,5 @@
 {
-  "id": "433c0400-ea09-4ee2-9d2f-7981c955055d",
+  "id": "80db0e9b-c288-4efb-b915-1882e6eb3eaa",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -96,6 +96,12 @@
           "primaryKey": false,
           "notNull": true
         },
+        "mortgage": {
+          "name": "mortgage",
+          "type": "numeric(9, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
         "user_id": {
           "name": "user_id",
           "type": "uuid",
@@ -119,10 +125,11 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "property_user_id_user_id_fk": {
-          "name": "property_user_id_user_id_fk",
+        "property_user_id_users_id_fk": {
+          "name": "property_user_id_users_id_fk",
           "tableFrom": "property",
-          "tableTo": "user",
+          "tableTo": "users",
+          "schemaTo": "auth",
           "columnsFrom": [
             "user_id"
           ],
@@ -133,28 +140,6 @@
           "onUpdate": "no action"
         }
       },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
-    },
-    "public.user": {
-      "name": "user",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     }

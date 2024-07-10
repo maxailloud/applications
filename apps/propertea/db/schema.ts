@@ -1,9 +1,9 @@
-import { numeric, pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core';
+import { numeric, pgSchema, pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core';
 
-export const USER_TABLE_NAME = 'user';
-export const userTable = pgTable(USER_TABLE_NAME, {
+const authSchema = pgSchema('auth');
+
+const users = authSchema.table('users', {
     id: uuid('id').primaryKey(),
-    name: text('name').notNull(),
 });
 
 export const PROPERTY_TABLE_NAME = 'property';
@@ -15,7 +15,7 @@ export const propertyTable = pgTable(PROPERTY_TABLE_NAME, {
     mortgage: numeric('mortgage', {precision: 9, scale: 2}).notNull(),
     userId: uuid('user_id')
         .notNull()
-        .references(() => userTable.id, {onDelete: 'cascade'}),
+        .references(() => users.id, {onDelete: 'cascade'}),
     createdAt: timestamp('created_at').notNull().defaultNow(),
     updatedAt: timestamp('updated_at').notNull().defaultNow(),
 });
@@ -31,9 +31,6 @@ export const expenseTable = pgTable(EXPENSE_TABLE_NAME, {
     createdAt: timestamp('created_at').notNull().defaultNow(),
     updatedAt: timestamp('updated_at').notNull().defaultNow(),
 });
-
-export type InsertUser = typeof userTable.$inferInsert;
-export type SelectUser = typeof userTable.$inferSelect;
 
 export type InsertProperty = typeof propertyTable.$inferInsert;
 export type SelectProperty = typeof propertyTable.$inferSelect;
