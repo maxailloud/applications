@@ -7,7 +7,8 @@
         "start": "nx serve --project",
         "serve": "nx serve --project",
         "build": "./scripts/build.sh",
-        "drizzle": "./scripts/drizzle.sh"
+        "drizzle": "./scripts/drizzle.sh",
+        "deploy": "./scripts/deploy.sh"
     },
     "private": true,
     "dependencies": {
