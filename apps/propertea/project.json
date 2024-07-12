@@ -12,7 +12,10 @@
                 "{options.outputPath}"
             ],
             "options": {
-                "outputPath": "dist/apps/propertea",
+                "outputPath": {
+                    "base": "dist/propertea",
+                    "browser": ""
+                },
                 "index": "apps/propertea/src/index.html",
                 "browser": "apps/propertea/src/main.ts",
                 "polyfills": [],
@@ -25,10 +28,12 @@
                     }
                 ],
                 "styles": [
-                    "apps/propertea/src/styles.scss",
+                    "apps/propertea/src/styles.scss"
                 ],
                 "scripts": [],
-                "plugins": ["apps/propertea/env-var-plugin.js"]
+                "plugins": [
+                    "apps/propertea/env-var-plugin.js"
+                ]
             },
             "configurations": {
                 "production": {
