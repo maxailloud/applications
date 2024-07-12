@@ -6,7 +6,7 @@
     "scripts": {
         "start": "nx serve --project",
         "serve": "nx serve --project",
-        "build": "nx run build --prod --base-href https://maxailloud.github.io/applications/ --project",
+        "build": "./scripts/build.sh",
         "drizzle": "./scripts/drizzle.sh"
     },
     "private": true,
