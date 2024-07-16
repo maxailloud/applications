@@ -1,4 +1,4 @@
-import { inject, Injectable, signal, WritableSignal } from '@angular/core';
+import { inject, Injectable, InjectionToken, signal, WritableSignal } from '@angular/core';
 import {
     AuthChangeEvent,
     AuthError,
@@ -7,12 +7,15 @@ import {
 } from '@supabase/supabase-js';
 import { SessionStore } from '@stores/session.store';
 
+export const AUTH_REDIRECT_URL = new InjectionToken<string>('Authentication redirect url');
+
 @Injectable({
     providedIn: 'root',
 })
 export class SessionService {
     private supabaseClient = inject(SupabaseClient);
     private sessionStore = inject(SessionStore);
+    private authenticationRedirectUrl = inject(AUTH_REDIRECT_URL);
 
     public isSessionInitialised: WritableSignal<boolean> = signal(false);
 
@@ -36,7 +39,13 @@ export class SessionService {
     }
 
     public signIn(email: string): Promise<AuthOtpResponse> {
-        return this.supabaseClient.auth.signInWithOtp({email});
+        console.log(this.authenticationRedirectUrl);
+        return this.supabaseClient.auth.signInWithOtp({
+            email,
+            options: {
+                emailRedirectTo: this.authenticationRedirectUrl
+            }
+        });
     }
 
     public signOut(): Promise<{ error: AuthError | null }> {

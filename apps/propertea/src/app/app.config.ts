@@ -5,7 +5,7 @@ import {
     provideExperimentalZonelessChangeDetection,
 } from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
-import { SessionService } from '@services/session.service';
+import { AUTH_REDIRECT_URL, SessionService } from '@services/session.service';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import initializeAppFactory from './app.factory';
 import appRoutes from './app.routes';
@@ -23,6 +23,10 @@ export const appConfig: ApplicationConfig = {
                 process.env['PROPERTEA_SUPABASE_URL'] as string,
                 process.env['PROPERTEA_SUPABASE_KEY'] as string,
             ),
+        },
+        {
+            provide: AUTH_REDIRECT_URL,
+            useFactory: (): string => process.env['PROPERTEA_AUTH_REDIRECT_URL'] as string,
         },
         {
             provide: APP_INITIALIZER,
