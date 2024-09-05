@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { ExpensesDataService } from '@data-services/expenses-data.service';
+import ExpensesDataService from '@data-services/expenses-data.service';
 import { SelectExpense, SelectProperty } from '@schema/schema';
 
 enum TabType {

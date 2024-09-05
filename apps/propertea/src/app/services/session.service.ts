@@ -19,12 +19,20 @@ export class SessionService {
 
     public isSessionInitialised: WritableSignal<boolean> = signal(false);
 
-    public initialiseSession(): Promise<void> {
-        return this.supabaseClient.auth.getSession().then(({data}) => {
-            if (null !== data.session) {
-                this.isSessionInitialised.set(true);
-                this.sessionStore.setSession(data.session);
-            }
+    public async initialiseSession(): Promise<void> {
+        console.log('SessionService - initialiseSession');
+        return new Promise((resolve, reject) => {
+            this.supabaseClient.auth.getSession().then(({data}) => {
+                if (null !== data.session) {
+                    console.log('    session initialised', data);
+                    this.isSessionInitialised.set(true);
+                    this.sessionStore.setSession(data.session);
+                    resolve();
+                } else {
+                    console.log('    session not initialised', data);
+                    reject();
+                }
+            })
         });
     }
 

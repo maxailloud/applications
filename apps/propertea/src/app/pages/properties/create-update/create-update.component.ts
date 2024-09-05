@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { PropertyDataService } from '@data-services/property-data.service';
+import PropertyDataService from '@data-services/property-data.service';
 import { PropertyFormFactory } from '@factories/property-form.factory';
 import { SelectProperty } from '@schema/schema';
 import { SessionStore } from '@stores/session.store';

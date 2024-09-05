@@ -5,9 +5,10 @@ import {
     provideExperimentalZonelessChangeDetection,
 } from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
+import appInitialiserFactory from '@factories/app-initialiser.factory';
+import DataService from '@services/data.service';
 import { AUTH_REDIRECT_URL, SessionService } from '@services/session.service';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import initializeAppFactory from './app.factory';
 import appRoutes from './app.routes';
 
 export const appConfig: ApplicationConfig = {
@@ -30,9 +31,9 @@ export const appConfig: ApplicationConfig = {
         },
         {
             provide: APP_INITIALIZER,
-            useFactory: initializeAppFactory,
+            useFactory: appInitialiserFactory,
             multi: true,
-            deps: [SessionService],
+            deps: [SessionService, DataService],
         },
 
     ],

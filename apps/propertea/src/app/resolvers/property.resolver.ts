@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, RedirectCommand, ResolveFn, Router } from '@angular/router';
-import { PropertyDataService } from '@data-services/property-data.service';
+import PropertyDataService from '@data-services/property-data.service';
 import { SelectProperty } from '@schema/schema';
 
 const propertyResolver: ResolveFn<SelectProperty> = async (

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { ExpensesDataService } from '@data-services/expenses-data.service';
+import ExpensesDataService from '@data-services/expenses-data.service';
 import { ExpenseFormFactory } from '@factories/expense-form.factory';
 
 @Component({

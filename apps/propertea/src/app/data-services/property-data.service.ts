@@ -5,7 +5,7 @@ import { PostgrestSingleResponse, SupabaseClient } from '@supabase/supabase-js';
 @Injectable({
     providedIn: 'root',
 })
-export class PropertyDataService {
+export default class PropertyDataService {
     private supabaseClient = inject(SupabaseClient);
 
     public async createProperty(property: InsertProperty):

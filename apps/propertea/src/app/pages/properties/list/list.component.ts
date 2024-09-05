@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { KeyValuePipe } from '@angular/common';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { PropertyDataService } from '@data-services/property-data.service';
-import { SelectProperty } from '@schema/schema';
+import PropertyDataService from '@data-services/property-data.service';
+import DataStore from '@stores/data.store';
 
 @Component({
     selector: 'propertea-property-list',
@@ -11,45 +12,23 @@ import { SelectProperty } from '@schema/schema';
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
         RouterLink,
+        KeyValuePipe,
     ]
 })
-export default class ListComponent implements OnInit {
+export default class ListComponent {
     public propertyDataService = inject(PropertyDataService);
+    public dataStore = inject(DataStore);
 
-    public isLoading = signal<boolean>(true);
-    public properties = signal<SelectProperty[]>([]);
+    private dataFromStore = this.dataStore.getData();
 
-    public ngOnInit(): void {
-        void this.refreshProperties();
-    }
-
-    private async refreshProperties(): Promise<void> {
-        try {
-            const {data: properties, error, status} = await this.propertyDataService.readProperties();
-
-            if (error) {
-                console.error(error, status);
-            }
-
-            if (properties) {
-                this.properties.set(properties);
-            }
-        } catch (error) {
-            if (error instanceof Error) {
-                console.error(error);
-            }
-
-            this.isLoading.set(false);
-        } finally {
-            this.isLoading.set(false);
-        }
-    }
+    public computedData = computed(() => this.dataFromStore().values());
 
     public async deleteProperty(propertyId: string): Promise<void> {
         try {
             await this.propertyDataService.deleteProperty(propertyId);
 
-            await this.refreshProperties();
+            // remove property from store, it should automatically refresh the list
+            //await this.refreshProperties();
         } catch (error) {
             if (error instanceof Error) {
                 console.error(error);

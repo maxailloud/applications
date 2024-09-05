@@ -5,7 +5,7 @@ import { PostgrestSingleResponse, SupabaseClient } from '@supabase/supabase-js';
 @Injectable({
     providedIn: 'root',
 })
-export class ExpensesDataService {
+export default class ExpensesDataService {
     private supabaseClient = inject(SupabaseClient);
 
     public async createExpense(name: string, amount: number, propertyId: string): Promise<PostgrestSingleResponse<SelectExpense>> {
