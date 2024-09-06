@@ -12,7 +12,6 @@ export default class DataService {
     private dataStore = inject(DataStore);
 
     public async initialiseData(): Promise<void> {
-        console.log('DataService - initialiseData');
         const propertiesWithExpenses = new Map();
 
         try {
