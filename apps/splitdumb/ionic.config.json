@@ -1,0 +1,7 @@
+{
+    "name": "splitdumb",
+    "integrations": {
+        "capacitor": {}
+    },
+    "type": "angular"
+}
