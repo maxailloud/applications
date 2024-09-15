@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import MessageComponent from '@components/message/message.component';
+import { Component, computed, inject } from '@angular/core';
+import GroupComponent from '@components/group/group.component';
 import { RefresherCustomEvent } from '@ionic/angular';
 import { IonContent, IonHeader, IonList, IonRefresher, IonRefresherContent, IonTitle, IonToolbar } from '@ionic/angular/standalone';
-import { DataService, Message } from '@services/data.service';
+import GroupStore from '@stores/group.store';
 
 @Component({
     selector: 'splitdumb-home',
@@ -19,19 +19,17 @@ import { DataService, Message } from '@services/data.service';
         IonRefresherContent,
         IonTitle,
         IonList,
-        MessageComponent,
+        GroupComponent,
     ]
 })
 export class HomePage {
-    private data = inject(DataService);
+    private groupFromStore = inject(GroupStore).getGroups();
+
+    public groups = computed(() => this.groupFromStore());
 
     public refresh(event: RefresherCustomEvent): void {
         setTimeout(() => {
             event.detail.complete();
         }, 3000);
-    }
-
-    public getMessages(): Message[] {
-        return this.data.getMessages();
     }
 }

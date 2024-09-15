@@ -1,0 +1,12 @@
+@if (group) {
+    <ion-item
+        [routerLink]="'/group/' + group.id"
+        [detail]="false"
+    >
+        <ion-label class="ion-text-wrap">
+            <h2>
+                {{ group.name }}
+            </h2>
+        </ion-label>
+    </ion-item>
+}

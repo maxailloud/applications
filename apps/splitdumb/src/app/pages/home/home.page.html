@@ -16,9 +16,8 @@
     </ion-header>
 
     <ion-list>
-        <splitdumb-message
-            *ngFor="let message of getMessages()"
-            [message]="message"
-        ></splitdumb-message>
+        @for (group of groups().values(); track group.id; ) {
+            <splitdumb-group [group]="group" ></splitdumb-group>
+        }
     </ion-list>
 </ion-content>

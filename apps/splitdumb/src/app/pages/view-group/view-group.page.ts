@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import Group from '@interfaces/group.interface';
 import {
     IonBackButton,
     IonButtons,
@@ -12,13 +13,12 @@ import {
     IonNote,
     IonToolbar
 } from '@ionic/angular/standalone';
-import { DataService, Message } from '@services/data.service';
 
 @Component({
-    selector: 'splitdumb-view-message',
+    selector: 'splitdumb-view-group',
     standalone: true,
-    templateUrl: './view-message.page.html',
-    styleUrls: ['./view-message.page.scss'],
+    templateUrl: './view-group.page.html',
+    styleUrls: ['./view-group.page.scss'],
     imports: [
         CommonModule,
         IonItem,
@@ -32,18 +32,13 @@ import { DataService, Message } from '@services/data.service';
         IonContent,
     ],
 })
-export class ViewMessagePage implements OnInit {
-    private data = inject(DataService);
+export class ViewGroupPage implements OnInit {
     private activatedRoute = inject(ActivatedRoute);
 
-    public message!: Message;
+    public group!: Group;
 
     public ngOnInit(): void {
-        const id = this.activatedRoute.snapshot.paramMap.get('id');
-
-        if (id) {
-            this.message = this.data.getMessageById(parseInt(id, 10));
-        }
+        this.group = this.activatedRoute.snapshot.data['group'];
     }
 
     public getBackButtonText(): string {

@@ -11,7 +11,13 @@
         "paths": {
             "@pages/*": ["apps/splitdumb/src/app/pages/*"],
             "@services/*": ["apps/splitdumb/src/app/services/*"],
+            "@stores/*": ["apps/splitdumb/src/app/stores/*"],
+            "@factories/*": ["apps/splitdumb/src/app/factories/*"],
+            "@interfaces/*": ["apps/splitdumb/src/app/interfaces/*"],
+            "@data-services/*": ["apps/splitdumb/src/app/data-services/*"],
+            "@resolvers/*": ["apps/splitdumb/src/app/resolvers/*"],
             "@components/*": ["apps/splitdumb/src/app/components/*"],
+            "@schema/*": ["apps/splitdumb/db/*"]
         }
     },
     "files": [],

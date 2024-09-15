@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import groupResolver from '@resolvers/group.resolver';
 
 const appRoutes: Route[] = [
     {
@@ -6,8 +7,11 @@ const appRoutes: Route[] = [
         loadComponent: () => import('./pages/home/home.page').then((m) => m.HomePage),
     },
     {
-        path: 'message/:id',
-        loadComponent: () => import('./pages/view-message/view-message.page').then((m) => m.ViewMessagePage),
+        path: 'group/:groupId',
+        loadComponent: () => import('@pages/view-group/view-group.page').then((m) => m.ViewGroupPage),
+        resolve: {
+            property: groupResolver,
+        }
     },
     {
         path: '',

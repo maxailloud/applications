@@ -9,7 +9,7 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" *ngIf="message">
+<ion-content [fullscreen]="true" *ngIf="group">
     <ion-item>
         <ion-icon
             aria-hidden="true"
@@ -18,17 +18,13 @@
         ></ion-icon>
         <ion-label class="ion-text-wrap">
             <h2>
-                {{ message.fromName }}
-                <span class="date">
-                    <ion-note>{{ message.date }}</ion-note>
-                </span>
+                {{ group.name }}
             </h2>
             <h3>To: <ion-note>Me</ion-note></h3>
         </ion-label>
     </ion-item>
 
     <div class="ion-padding">
-        <h1>{{ message.subject }}</h1>
         <p>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim

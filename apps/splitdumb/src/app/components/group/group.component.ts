@@ -4,14 +4,14 @@ import {
     Input,
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import Group from '@interfaces/group.interface';
 import { IonIcon, IonItem, IonLabel, IonNote } from '@ionic/angular/standalone';
-import { Message } from '@services/data.service';
 
 @Component({
-    selector: 'splitdumb-message',
+    selector: 'splitdumb-group',
     standalone: true,
-    templateUrl: './message.component.html',
-    styleUrls: ['./message.component.scss'],
+    templateUrl: './group.component.html',
+    styleUrls: ['./group.component.scss'],
     imports: [
         CommonModule,
         RouterModule,
@@ -21,6 +21,6 @@ import { Message } from '@services/data.service';
         IonIcon,
     ]
 })
-export default class MessageComponent {
-    @Input({ required: true }) public message!: Message;
+export default class GroupComponent {
+    @Input({ required: true }) public group!: Group;
 }
