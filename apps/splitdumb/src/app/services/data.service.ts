@@ -1,5 +1,7 @@
 import { inject, Injectable } from '@angular/core';
+import ExpensesDataService from '@data-services/expenses-data.service';
 import GroupDataService from '@data-services/group-data.service';
+import ExpenseStore from '@stores/expense.store';
 import GroupStore from '@stores/group.store';
 
 @Injectable({
@@ -8,17 +10,42 @@ import GroupStore from '@stores/group.store';
 export default class DataService {
     private groupDataService = inject(GroupDataService);
     private groupStore = inject(GroupStore);
+    private expenseStore = inject(ExpenseStore);
+    private expensesDataService = inject(ExpensesDataService);
 
     public async initialiseData(): Promise<void> {
         const groups = new Map();
+        const expenses = new Map();
 
         try {
-            const readGroups = await this.groupDataService.readGroups();
+            const {data: readGroups, error, status} = await this.groupDataService.readGroups();
+
+            if (error) {
+                console.error(error, status);
+            }
 
             if (readGroups) {
-                readGroups.forEach((group) => {
-                    groups.set(group.id, group);
-                });
+                await Promise.all(readGroups.map(async (group) => {
+                    try {
+                        groups.set(group.id, group);
+
+                        const {data: readExpenses, error, status} = await this.expensesDataService.readExpenses(group.id);
+
+                        if (error) {
+                            console.error(error, status);
+                        }
+
+                        if (readExpenses) {
+                            expenses.set(group.id, readExpenses);
+                        } else {
+                            expenses.set(group.id, []);
+                        }
+                    } catch (error) {
+                        if (error instanceof Error) {
+                            console.error(error);
+                        }
+                    }
+                }));
             }
         } catch (error) {
             if (error instanceof Error) {
@@ -27,5 +54,6 @@ export default class DataService {
         }
 
         this.groupStore.setGroups(groups);
+        this.expenseStore.setExpenses(expenses);
     }
 }

@@ -1,17 +1,13 @@
 import { Route } from '@angular/router';
-import groupResolver from '@resolvers/group.resolver';
 
 const appRoutes: Route[] = [
     {
-        path: 'home',
-        loadComponent: () => import('./pages/home/home.page').then((m) => m.HomePage),
+        path: 'account',
+        loadComponent: () => import('./pages/account/account.page').then((m) => m.AccountPage),
     },
     {
-        path: 'group/:groupId',
-        loadComponent: () => import('@pages/view-group/view-group.page').then((m) => m.ViewGroupPage),
-        resolve: {
-            property: groupResolver,
-        }
+        path: 'groups',
+        loadChildren: () => import('./pages/groups/groups.routes'),
     },
     {
         path: '',

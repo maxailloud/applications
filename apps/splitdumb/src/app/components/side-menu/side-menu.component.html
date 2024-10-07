@@ -1,0 +1,59 @@
+<ion-menu contentId="main-content" menuId="main-content">
+    <ion-header>
+        <ion-toolbar>
+            <ion-title>SplitDumb</ion-title>
+        </ion-toolbar>
+    </ion-header>
+
+    <ion-list lines="none" class="ion-no-padding">
+        <ion-list-header>
+            <ion-toolbar>
+                <ion-buttons slot="primary">
+                    <ion-button (click)="openModal()">
+                        <ion-icon slot="icon-only" name="add-circle"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
+                <ion-label>Groups</ion-label>
+            </ion-toolbar>
+        </ion-list-header>
+    </ion-list>
+
+    <ion-content>
+        <ion-list lines="none" class="ion-no-padding">
+            @for (group of groups().values(); track group.id; ) {
+                <ion-menu-toggle autoHide="false">
+                    <ion-item
+                        [detail]="false"
+                        [routerLink]="['/groups', 'detail', group.id]"
+                        routerDirection="root"
+                        routerLinkActive="primary"
+                    >
+                        <ion-icon aria-hidden="true" [name]="group.icon" slot="start"></ion-icon>
+                        <ion-label>{{ group.name }}</ion-label>
+                    </ion-item>
+                </ion-menu-toggle>
+            }
+        </ion-list>
+    </ion-content>
+
+    <ion-toolbar>
+        <ion-menu-toggle autoHide="false">
+            <ion-grid class="ion-no-padding">
+                <ion-row>
+                    <ion-col>
+                        <ion-button fill="clear" color="medium" expand="block" routerLink="/users/">
+                            <ion-icon slot="start" name="people"></ion-icon>
+                            Friends
+                        </ion-button>
+                    </ion-col>
+                    <ion-col>
+                        <ion-button fill="clear" color="medium" expand="block" routerLink="/account/">
+                            <ion-icon slot="start" name="cog"></ion-icon>
+                            Account
+                        </ion-button>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-menu-toggle>
+    </ion-toolbar>
+</ion-menu>

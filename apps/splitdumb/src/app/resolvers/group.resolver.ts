@@ -1,9 +1,9 @@
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, RedirectCommand, ResolveFn, Router } from '@angular/router';
-import Group from '@interfaces/group.interface';
+import { SelectGroup } from '@schema/schema';
 import GroupStore from '@stores/group.store';
 
-const groupResolver: ResolveFn<Group> = async (
+const groupResolver: ResolveFn<SelectGroup> = async (
     route: ActivatedRouteSnapshot,
 ) => {
     const groupId = route.paramMap.get('groupId');

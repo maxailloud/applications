@@ -1,21 +1,21 @@
 import { Injectable, Signal, signal } from '@angular/core';
-import Group from '@interfaces/group.interface';
+import { SelectGroup } from '@schema/schema';
 
 @Injectable({
     providedIn: 'root',
 })
 export default class GroupStore {
-    private groups = signal<Map<string, Group>>(new Map());
+    private groups = signal<Map<string, SelectGroup>>(new Map());
 
-    public getGroups(): Signal<Map<string, Group>> {
+    public getGroups(): Signal<Map<string, SelectGroup>> {
         return this.groups;
     }
 
-    public getGroup(groupId: string): Group | undefined {
+    public getGroup(groupId: string): SelectGroup | undefined {
         return this.groups().get(groupId);
     }
 
-    public setGroups(groups: Map<string, Group>): void {
+    public setGroups(groups: Map<string, SelectGroup>): void {
         this.groups.set(groups);
     }
 }

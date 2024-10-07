@@ -1,3 +1,7 @@
 <ion-app>
-    <ion-router-outlet></ion-router-outlet>
+    <ion-split-pane contentId="main-content" when="xl">
+        <splitdumb-side-menu></splitdumb-side-menu>
+
+        <ion-router-outlet id="main-content"></ion-router-outlet>
+    </ion-split-pane>
 </ion-app>
