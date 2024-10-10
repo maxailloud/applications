@@ -1,7 +1,8 @@
-import { Component, computed, inject, } from '@angular/core';
+import { Component, computed, inject, ViewChild, } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import CreateGroupComponent from '@components/create-group/create-group.component';
+import { ModalStatus } from '@enums/modal-status.enum';
 import {
     IonButton,
     IonButtons,
@@ -58,6 +59,8 @@ import GroupStore from '@stores/group.store';
     ]
 })
 export default class SideMenuComponent {
+    @ViewChild(IonMenu) public menu!: IonMenu;
+
     private groupFromStore = inject(GroupStore).getGroups();
     private modalController = inject(ModalController);
 
@@ -68,6 +71,12 @@ export default class SideMenuComponent {
             component: CreateGroupComponent,
         });
 
-        return modal.present();
+        void modal.present();
+
+        const data = await modal.onWillDismiss();
+
+        if (data.role === ModalStatus.DISMISS_CONFIRM) {
+            await this.menu.close();
+        }
     }
 }

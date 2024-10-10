@@ -11,6 +11,7 @@ export const groupTable = pgTable(GROUP_TABLE_NAME, {
     id: uuid('id').primaryKey().defaultRandom(),
     name: text('name').notNull(),
     icon: text('icon').notNull(),
+    currency: text('currency').notNull(),
     creatorId: uuid('creator_id')
         .notNull()
         .references(() => users.id, {onDelete: 'cascade'}),
@@ -21,7 +22,7 @@ export const groupTable = pgTable(GROUP_TABLE_NAME, {
 export const EXPENSE_TABLE_NAME = 'expense';
 export const expenseTable = pgTable(EXPENSE_TABLE_NAME, {
     id: uuid('id').primaryKey().defaultRandom(),
-    name: text('name').notNull(),
+    description: text('description').notNull(),
     amount: numeric('amount', {precision: 7, scale: 2}).notNull(),
     currency: text('currency').notNull(),
     groupId: uuid('group_id')

@@ -23,7 +23,7 @@
             @for (group of groups().values(); track group.id; ) {
                 <ion-menu-toggle autoHide="false">
                     <ion-item
-                        [detail]="false"
+                        detail="false"
                         [routerLink]="['/groups', 'detail', group.id]"
                         routerDirection="root"
                         routerLinkActive="primary"
@@ -32,6 +32,10 @@
                         <ion-label>{{ group.name }}</ion-label>
                     </ion-item>
                 </ion-menu-toggle>
+            } @empty {
+                <ion-item lines="none">
+                    <ion-label>No groups.</ion-label>
+                </ion-item>
             }
         </ion-list>
     </ion-content>

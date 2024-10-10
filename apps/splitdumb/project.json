@@ -73,7 +73,7 @@
                 ],
                 "scripts": [],
                 "plugins": [
-                    "env-var-plugin.js"
+                    "apps/splitdumb/env-var-plugin.js"
                 ]
             },
             "configurations": {

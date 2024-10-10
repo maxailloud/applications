@@ -6,7 +6,8 @@ export class GroupFormFactory {
     public static createForm(groupData?: Partial<InsertGroup>): FormGroup<GroupForm> {
         return new FormGroup<GroupForm>({
             name: new FormControl(groupData?.name ?? '', {nonNullable: true}),
-            icon: new FormControl(groupData?.icon ?? '', {nonNullable: true}),
+            icon: new FormControl(groupData?.icon ?? 'people', {nonNullable: true}),
+            currency: new FormControl(groupData?.currency ?? '', {nonNullable: true}),
         });
     }
 }

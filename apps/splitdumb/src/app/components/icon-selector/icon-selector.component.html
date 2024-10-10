@@ -1,0 +1,39 @@
+<ion-button size="large" fill="outline" color="tertiary" aria-label="Group icon" id="open-icon-modal">
+    <ion-icon slot="icon-only" [name]="value" size="large" aria-hidden="true"></ion-icon>
+</ion-button>
+
+<ion-modal class="icon-selector" trigger="open-icon-modal">
+    <ng-template>
+        <ion-header>
+            <ion-toolbar color="secondary">
+                <ion-buttons slot="start">
+                    <ion-button (click)="cancel()">Cancel</ion-button>
+                </ion-buttons>
+                <ion-title>Select icon</ion-title>
+            </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+            <ion-segment value="outline" (ionChange)="changeIconType($event)">
+                <ion-segment-button value="outline">
+                    <ion-label>Outline</ion-label>
+                </ion-segment-button>
+                <ion-segment-button value="filled">
+                    <ion-label>Filled</ion-label>
+                </ion-segment-button>
+                <ion-segment-button value="sharp">
+                    <ion-label>Sharp</ion-label>
+                </ion-segment-button>
+            </ion-segment>
+            @for (icon of displayedIcons(); track icon.id; ) {
+                <ion-button type="button" size="large" fill="outline" color="tertiary" [attr.aria-label]="'Icon ' + icon.name"
+                            (click)="select(icon.id)">
+                    <ion-icon slot="icon-only" [name]="icon.name" aria-hidden="true"></ion-icon>
+                </ion-button>
+            }
+        </ion-content>
+        <ion-footer>
+            <ion-toolbar color="secondary">
+            </ion-toolbar>
+        </ion-footer>
+    </ng-template>
+</ion-modal>

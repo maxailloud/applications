@@ -8,6 +8,7 @@
         "noPropertyAccessFromIndexSignature": true,
         "noImplicitReturns": true,
         "noFallthroughCasesInSwitch": true,
+        "resolveJsonModule": true,
         "paths": {
             "@pages/*": ["apps/splitdumb/src/app/pages/*"],
             "@services/*": ["apps/splitdumb/src/app/services/*"],
@@ -19,6 +20,7 @@
             "@data-services/*": ["apps/splitdumb/src/app/data-services/*"],
             "@resolvers/*": ["apps/splitdumb/src/app/resolvers/*"],
             "@components/*": ["apps/splitdumb/src/app/components/*"],
+            "@pipes/*": ["apps/splitdumb/src/app/pipes/*"],
             "@schema/*": ["apps/splitdumb/db/*"]
         }
     },

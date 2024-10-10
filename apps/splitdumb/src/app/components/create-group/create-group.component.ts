@@ -1,22 +1,33 @@
-import { NgIf } from '@angular/common';
 import { Component, inject, } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import CurrencySelectorComponent from '@components/currency-selector/currency-selector.component';
+import IconSelectorComponent from '@components/icon-selector/icon-selector.component';
 import GroupDataService from '@data-services/group-data.service';
 import { ModalStatus } from '@enums/modal-status.enum';
 import { GroupFormFactory } from '@forms/group-form.factory';
 import {
     IonButton,
     IonButtons,
+    IonCol,
     IonContent,
-    IonHeader, IonIcon,
+    IonGrid,
+    IonHeader,
+    IonIcon,
     IonInput,
     IonItem,
+    IonLabel,
+    IonList,
     IonModal,
+    IonRow,
+    IonSelect,
+    IonSelectOption,
     IonTitle,
     IonToolbar,
     ModalController,
 } from '@ionic/angular/standalone';
+import { CurrencySymbolPipe } from '@pipes/currency-symbol.pipe';
+import GroupStore from '@stores/group.store';
 
 @Component({
     selector: 'splitdumb-create-group',
@@ -34,16 +45,25 @@ import {
         IonTitle,
         IonToolbar,
         IonIcon,
-        NgIf,
         ReactiveFormsModule,
+        IonList,
+        CurrencySelectorComponent,
+        IonSelect,
+        IonSelectOption,
+        IonLabel,
+        IonGrid,
+        IonRow,
+        IonCol,
+        CurrencySymbolPipe,
+        IconSelectorComponent,
     ]
 })
 export default class CreateGroupComponent {
     private modalController = inject(ModalController);
     private groupDataService = inject(GroupDataService);
+    private groupStore = inject(GroupStore);
     private router = inject(Router);
 
-    public groupName = '';
     public createGroupForm = GroupFormFactory.createForm();
 
     public get name(): FormControl<string> {
@@ -59,6 +79,7 @@ export default class CreateGroupComponent {
             const {data: group, error} = await this.groupDataService.createGroup({
                 name: this.createGroupForm.controls.name.value,
                 icon: this.createGroupForm.controls.icon.value,
+                currency: this.createGroupForm.controls.currency.value,
                 creatorId: '5d6c47f3-60b6-4bc7-9511-4693b464ee00',
             });
 
@@ -67,8 +88,8 @@ export default class CreateGroupComponent {
             }
 
             if (group) {
-                void this.modalController.dismiss(this.groupName, ModalStatus.DISMISS_CONFIRM);
-
+                this.groupStore.addGroup(group);
+                void this.modalController.dismiss(group, ModalStatus.DISMISS_CONFIRM);
                 void this.router.navigate(['groups', 'detail', group.id]);
             }
         }

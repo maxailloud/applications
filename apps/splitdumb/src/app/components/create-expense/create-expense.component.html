@@ -1,0 +1,60 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-button (click)="cancel()">
+                <ion-icon slot="icon-only" name="close"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title>Add an expense</ion-title>
+        <ion-buttons slot="end">
+            <ion-button type="submit" form="create-group" [strong]="true">Add</ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+    <form id="create-group" [formGroup]="createGroupForm" (ngSubmit)="create()">
+        <ion-list lines="none">
+            <ion-item>
+                <ion-input
+                    type="text"
+                    name="description"
+                    formControlName="description"
+                    label="Description"
+                    labelPlacement="stacked"
+                    required="required"
+                    errorText="The description is required"
+                ></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-button type="button" ></ion-button>
+                <ion-input
+                    type="number"
+                    name="amount"
+                    formControlName="amount"
+                    required="required"
+                    errorText="The amount is required"
+                ></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-input type="number"
+                    name="amount"
+                    formControlName="amount"
+                    required="required"
+                    errorText="The amount is required">
+                    <ion-icon slot="start" name="cog" aria-hidden="true"></ion-icon>
+                </ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-select label="Default label" placeholder="Favorite Fruit">
+                    <ion-select-option value="apple">Apple</ion-select-option>
+                    <ion-select-option value="banana">Banana</ion-select-option>
+                    <ion-select-option value="orange">Orange</ion-select-option>
+                </ion-select>
+            </ion-item>
+        </ion-list>
+    </form>
+</ion-content>

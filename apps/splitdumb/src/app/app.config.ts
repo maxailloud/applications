@@ -1,7 +1,7 @@
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import {
     APP_INITIALIZER,
-    ApplicationConfig,
+    ApplicationConfig, isDevMode,
     provideExperimentalZonelessChangeDetection,
 } from '@angular/core';
 import { PreloadAllModules, provideRouter, RouteReuseStrategy, withComponentInputBinding, withPreloading } from '@angular/router';
@@ -11,8 +11,10 @@ import { provideIonicAngular } from '@ionic/angular/standalone';
 import DataService from '@services/data.service';
 import { SessionService } from '@services/session.service';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import appIconsImporter from './app.icons';
 import appRoutes from './app.routes';
+import { addIcons } from 'ionicons';
+import * as allIcons from 'ionicons/icons';
+import * as useIcons from './app.icons';
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -32,14 +34,11 @@ export const appConfig: ApplicationConfig = {
         },
         {
             provide: APP_INITIALIZER,
-            useFactory: appIconsImporter,
-            multi: true,
-        },
-        {
-            provide: APP_INITIALIZER,
             useFactory: appInitialiserFactory,
             multi: true,
             deps: [SessionService, DataService],
         },
     ],
 };
+
+addIcons(isDevMode() ? allIcons : useIcons);

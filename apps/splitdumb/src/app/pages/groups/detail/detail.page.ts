@@ -1,6 +1,6 @@
-import { getCurrencySymbol } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import CreateExpenseComponent from '@components/create-expense/create-expense.component';
 import { RefresherCustomEvent } from '@ionic/angular';
 import {
     IonBackButton, IonButton,
@@ -11,7 +11,7 @@ import {
     IonItem,
     IonLabel, IonList, IonMenuButton,
     IonNote, IonRefresher, IonRefresherContent, IonTitle,
-    IonToolbar
+    IonToolbar, ModalController
 } from '@ionic/angular/standalone';
 import { SelectExpense, SelectGroup } from '@schema/schema';
 import ExpenseStore from '@stores/expense.store';
@@ -45,6 +45,7 @@ import ExpenseStore from '@stores/expense.store';
 export class DetailPage {
     private activatedRoute = inject(ActivatedRoute);
     private expenseStore = inject(ExpenseStore);
+    private modalController = inject(ModalController);
 
     public group!: SelectGroup;
     public expenses = signal<SelectExpense[]>([]);
@@ -53,15 +54,23 @@ export class DetailPage {
         this.group = this.activatedRoute.snapshot.data['group'];
 
         this.expenses.set(this.expenseStore.getExpenses(this.group.id));
-        Intl.supportedValuesOf('currency').forEach((currency) => {
-            console.log(currency);
-            console.log(Intl.NumberFormat('en', {style:'currency', currency: currency}).formatToParts().find(part => part. type === 'currency'));
-        });
     }
 
     public refresh(event: RefresherCustomEvent): void {
         setTimeout(() => {
             event.detail.complete();
         }, 3000);
+    }
+
+    public async openModal(): Promise<void> {
+        const modal = await this.modalController.create({
+            component: CreateExpenseComponent,
+            componentProps: {
+                group: this.group
+            }
+
+        });
+
+        return modal.present();
     }
 }

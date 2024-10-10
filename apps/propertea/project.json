@@ -32,7 +32,7 @@
                 ],
                 "scripts": [],
                 "plugins": [
-                    "env-var-plugin.js"
+                    "apps/propertea/env-var-plugin.js"
                 ]
             },
             "configurations": {

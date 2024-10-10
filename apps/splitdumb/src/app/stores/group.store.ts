@@ -15,6 +15,13 @@ export default class GroupStore {
         return this.groups().get(groupId);
     }
 
+    public addGroup(group: SelectGroup): void {
+        const groups = this.groups();
+        groups.set(group.id, group);
+
+        this.groups.set(groups);
+    }
+
     public setGroups(groups: Map<string, SelectGroup>): void {
         this.groups.set(groups);
     }

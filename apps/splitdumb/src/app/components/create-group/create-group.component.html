@@ -14,16 +14,37 @@
 
 <ion-content class="ion-padding">
     <form id="create-group" [formGroup]="createGroupForm" (ngSubmit)="create()">
-        <ion-item>
-            <ion-input
-                type="text"
-                name="name"
-                formControlName="name"
-                label="Enter the name of the group"
-                labelPlacement="stacked"
-                required="required"
-                errorText="The name is required"
-            ></ion-input>
-        </ion-item>
+        <ion-list lines="none">
+            <ion-item>
+                <ion-grid>
+                    <ion-row>
+                        <ion-col>
+                            <splitdumb-icon-selector
+                                class="w-full"
+                                formControlName="icon"
+                            />
+                        </ion-col>
+                        <ion-col>
+                            <ion-input
+                                type="text"
+                                name="name"
+                                formControlName="name"
+                                label="Enter the name of the group"
+                                labelPlacement="stacked"
+                                required="required"
+                                errorText="The name is required"
+                            />
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-item>
+
+            <ion-item>
+                <splitdumb-currency-selector
+                    class="w-full"
+                    formControlName="currency"
+                />
+            </ion-item>
+        </ion-list>
     </form>
 </ion-content>

@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import ExpensesDataService from '@data-services/expenses-data.service';
+import ExpenseDataService from '@data-services/expense-data.service';
 import GroupDataService from '@data-services/group-data.service';
 import ExpenseStore from '@stores/expense.store';
 import GroupStore from '@stores/group.store';
@@ -11,7 +11,7 @@ export default class DataService {
     private groupDataService = inject(GroupDataService);
     private groupStore = inject(GroupStore);
     private expenseStore = inject(ExpenseStore);
-    private expensesDataService = inject(ExpensesDataService);
+    private expensesDataService = inject(ExpenseDataService);
 
     public async initialiseData(): Promise<void> {
         const groups = new Map();
