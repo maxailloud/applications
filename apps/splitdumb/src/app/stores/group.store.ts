@@ -1,5 +1,6 @@
 import { Injectable, Signal, signal } from '@angular/core';
 import { SelectGroup } from '@schema/schema';
+import { objectToCamel } from 'ts-case-convert';
 
 @Injectable({
     providedIn: 'root',
@@ -16,10 +17,7 @@ export default class GroupStore {
     }
 
     public addGroup(group: SelectGroup): void {
-        const groups = this.groups();
-        groups.set(group.id, group);
-
-        this.groups.set(groups);
+        this.groups.update(groups => groups.set(group.id, objectToCamel(group)));
     }
 
     public setGroups(groups: Map<string, SelectGroup>): void {

@@ -1,10 +1,20 @@
-import { Component, forwardRef, signal, ViewChild, WritableSignal, } from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef, input, signal, viewChild, WritableSignal, } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import Currency from '@components/currency-selector/currency.interface';
 import {
     IonButton,
-    IonButtons, IonContent,
-    IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonModal, IonNote, IonTitle, IonToolbar,
+    IonButtons,
+    IonContent,
+    IonHeader,
+    IonIcon,
+    IonInput,
+    IonItem,
+    IonLabel,
+    IonList,
+    IonModal,
+    IonNote,
+    IonTitle,
+    IonToolbar,
 } from '@ionic/angular/standalone';
 import { CurrencySymbolPipe } from '@pipes/currency-symbol.pipe';
 
@@ -36,13 +46,14 @@ import { CurrencySymbolPipe } from '@pipes/currency-symbol.pipe';
             multi: true,
         },
     ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class CurrencySelectorComponent implements ControlValueAccessor {
-    @ViewChild(IonModal) public modal!: IonModal;
+    public modal = viewChild.required<IonModal>(IonModal);
+    public onlyButton = input<boolean>(false);
 
     public currencies: WritableSignal<Currency[]> = signal([]);
     public currency!: Currency; // select a default one
-
     public isDisabled = false;
 
     private _value?: string;
@@ -98,13 +109,13 @@ export default class CurrencySelectorComponent implements ControlValueAccessor {
     }
 
     public cancel(): void {
-        void this.modal.dismiss(this.currency, 'cancel');
+        void this.modal().dismiss(this.currency, 'cancel');
     }
 
     public select(selectedCurrency: Currency): void {
         this.currency = selectedCurrency;
         this.value = selectedCurrency.id;
 
-        void this.modal.dismiss(this.currency, 'confirm');
+        void this.modal().dismiss(this.currency, 'confirm');
     }
 }

@@ -1,13 +1,23 @@
-<div class="flex items-center justify-between">
-    <ion-label>Currency</ion-label>
-    <ion-button slot="end" fill="clear" color="medium" id="open-currency-modal">
+<div class="flex items-center justify-between" id="open-currency-modal">
+@if (onlyButton()) {
+    <ion-button slot="end" fill="outline" color="medium">
         @if (value) {
             {{ value | sdCurrencySymbol }}
         } @else {
             Select currency
         }
-        <ion-icon slot="end" name="caret-down-outline" size="small" aria-hidden="true"></ion-icon>
     </ion-button>
+} @else {
+    <ion-label>Currency</ion-label>
+    <ion-button slot="end" fill="clear" color="medium">
+        @if (value) {
+            {{ value | sdCurrencySymbol }}
+        } @else {
+            Select currency
+        }
+        <ion-icon slot="end" name="caret-down-outline" size="small" aria-hidden="true"/>
+    </ion-button>
+}
 </div>
 
 <ion-modal trigger="open-currency-modal">

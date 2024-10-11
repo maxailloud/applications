@@ -1,4 +1,4 @@
-import { Component, inject, } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, viewChild, OnInit, } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import CurrencySelectorComponent from '@components/currency-selector/currency-selector.component';
@@ -56,9 +56,12 @@ import GroupStore from '@stores/group.store';
         IonCol,
         CurrencySymbolPipe,
         IconSelectorComponent,
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class CreateGroupComponent {
+    public nameInput = viewChild.required<IonInput>("nameInput");
+
     private modalController = inject(ModalController);
     private groupDataService = inject(GroupDataService);
     private groupStore = inject(GroupStore);
@@ -66,11 +69,16 @@ export default class CreateGroupComponent {
 
     public createGroupForm = GroupFormFactory.createForm();
 
+    public ionViewDidEnter(): void {
+        void this.nameInput().setFocus();
+    }
+
     public get name(): FormControl<string> {
         return this.createGroupForm.controls.name;
     }
 
     public cancel(): Promise<boolean> {
+        this.createGroupForm.reset();
         return this.modalController.dismiss(null, ModalStatus.DISMISS_CANCEL);
     }
 

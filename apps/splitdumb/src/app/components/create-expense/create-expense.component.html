@@ -2,7 +2,7 @@
     <ion-toolbar>
         <ion-buttons slot="start">
             <ion-button (click)="cancel()">
-                <ion-icon slot="icon-only" name="close"></ion-icon>
+                <ion-icon slot="icon-only" name="close"/>
             </ion-button>
         </ion-buttons>
         <ion-title>Add an expense</ion-title>
@@ -13,10 +13,11 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-    <form id="create-group" [formGroup]="createGroupForm" (ngSubmit)="create()">
+    <form id="create-group" [formGroup]="createExpenseForm" (ngSubmit)="create()">
         <ion-list lines="none">
             <ion-item>
                 <ion-input
+                    #descriptionInput
                     type="text"
                     name="description"
                     formControlName="description"
@@ -24,36 +25,23 @@
                     labelPlacement="stacked"
                     required="required"
                     errorText="The description is required"
-                ></ion-input>
+                />
             </ion-item>
 
             <ion-item>
-                <ion-button type="button" ></ion-button>
+                <splitdumb-currency-selector
+                    slot="start"
+                    formControlName="currency"
+                    [onlyButton]="true"
+                />
+
                 <ion-input
-                    type="number"
+                    type="text"
                     name="amount"
                     formControlName="amount"
                     required="required"
                     errorText="The amount is required"
-                ></ion-input>
-            </ion-item>
-
-            <ion-item>
-                <ion-input type="number"
-                    name="amount"
-                    formControlName="amount"
-                    required="required"
-                    errorText="The amount is required">
-                    <ion-icon slot="start" name="cog" aria-hidden="true"></ion-icon>
-                </ion-input>
-            </ion-item>
-
-            <ion-item>
-                <ion-select label="Default label" placeholder="Favorite Fruit">
-                    <ion-select-option value="apple">Apple</ion-select-option>
-                    <ion-select-option value="banana">Banana</ion-select-option>
-                    <ion-select-option value="orange">Orange</ion-select-option>
-                </ion-select>
+                />
             </ion-item>
         </ion-list>
     </form>

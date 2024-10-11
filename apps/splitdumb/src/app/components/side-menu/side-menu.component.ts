@@ -1,4 +1,4 @@
-import { Component, computed, inject, ViewChild, } from '@angular/core';
+import { Component, computed, inject, viewChild, } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import CreateGroupComponent from '@components/create-group/create-group.component';
@@ -59,7 +59,7 @@ import GroupStore from '@stores/group.store';
     ]
 })
 export default class SideMenuComponent {
-    @ViewChild(IonMenu) public menu!: IonMenu;
+    public menu = viewChild.required<IonMenu>(IonMenu);
 
     private groupFromStore = inject(GroupStore).getGroups();
     private modalController = inject(ModalController);
@@ -76,7 +76,7 @@ export default class SideMenuComponent {
         const data = await modal.onWillDismiss();
 
         if (data.role === ModalStatus.DISMISS_CONFIRM) {
-            await this.menu.close();
+            await this.menu().close();
         }
     }
 }

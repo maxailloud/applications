@@ -1,4 +1,4 @@
-import { Component, forwardRef, signal, ViewChild, WritableSignal, } from '@angular/core';
+import { Component, forwardRef, signal, viewChild, ViewChild, WritableSignal, } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import {
     IonButton,
@@ -53,7 +53,7 @@ interface Icon {
     ],
 })
 export default class IconSelectorComponent implements ControlValueAccessor {
-    @ViewChild(IonModal) public modal!: IonModal;
+    public modal = viewChild.required<IonModal>(IonModal);
 
     public icons: Record<IconType.Outline | IconType.Filled | IconType.Sharp, Icon[]> = {
         outline: [],
@@ -122,13 +122,13 @@ export default class IconSelectorComponent implements ControlValueAccessor {
     }
 
     public cancel(): void {
-        void this.modal.dismiss(this.value, 'cancel');
+        void this.modal().dismiss(this.value, 'cancel');
     }
 
     public select(selectedIcon: string): void {
         this.value = selectedIcon;
 
-        void this.modal.dismiss(this.value, 'confirm');
+        void this.modal().dismiss(this.value, 'confirm');
     }
 
     public changeIconType(event: CustomEvent<SegmentChangeEventDetail>): void {

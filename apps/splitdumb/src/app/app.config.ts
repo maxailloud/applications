@@ -19,7 +19,9 @@ import * as useIcons from './app.icons';
 export const appConfig: ApplicationConfig = {
     providers: [
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-        provideIonicAngular(),
+        provideIonicAngular({
+            useSetInputAPI: true,
+        }),
         provideRouter(appRoutes, withComponentInputBinding(), withPreloading(PreloadAllModules)),
         provideHttpClient(
             withFetch(),

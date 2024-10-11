@@ -1,19 +1,28 @@
-import { Component, inject, signal } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Component, inject, input, computed } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import CreateExpenseComponent from '@components/create-expense/create-expense.component';
 import { RefresherCustomEvent } from '@ionic/angular';
 import {
-    IonBackButton, IonButton,
+    IonBackButton,
+    IonBadge,
+    IonButton,
     IonButtons,
-    IonContent, IonFab, IonFabButton,
+    IonContent,
+    IonFab,
+    IonFabButton,
     IonHeader,
     IonIcon,
     IonItem,
-    IonLabel, IonList, IonMenuButton,
-    IonNote, IonRefresher, IonRefresherContent, IonTitle,
-    IonToolbar, ModalController
+    IonLabel,
+    IonList,
+    IonMenuButton,
+    IonRefresher,
+    IonRefresherContent,
+    IonTitle,
+    IonToolbar,
+    ModalController
 } from '@ionic/angular/standalone';
-import { SelectExpense, SelectGroup } from '@schema/schema';
+import { SelectGroup } from '@schema/schema';
 import ExpenseStore from '@stores/expense.store';
 
 @Component({
@@ -24,7 +33,6 @@ import ExpenseStore from '@stores/expense.store';
     imports: [
         IonItem,
         IonLabel,
-        IonNote,
         IonIcon,
         IonButtons,
         IonToolbar,
@@ -40,21 +48,18 @@ import ExpenseStore from '@stores/expense.store';
         IonFabButton,
         IonButton,
         RouterLink,
+        IonBadge,
     ],
 })
 export class DetailPage {
-    private activatedRoute = inject(ActivatedRoute);
     private expenseStore = inject(ExpenseStore);
     private modalController = inject(ModalController);
 
-    public group!: SelectGroup;
-    public expenses = signal<SelectExpense[]>([]);
+    public group = input.required<SelectGroup>();
 
-    public constructor() {
-        this.group = this.activatedRoute.snapshot.data['group'];
-
-        this.expenses.set(this.expenseStore.getExpenses(this.group.id));
-    }
+    public expenses = computed(() => {
+        return this.expenseStore.getAllExpenses()().get(this.group().id) ?? [];
+    });
 
     public refresh(event: RefresherCustomEvent): void {
         setTimeout(() => {
@@ -66,11 +71,10 @@ export class DetailPage {
         const modal = await this.modalController.create({
             component: CreateExpenseComponent,
             componentProps: {
-                group: this.group
+                group: this.group()
             }
-
         });
 
-        return modal.present();
+        void modal.present();
     }
 }
