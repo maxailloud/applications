@@ -1,38 +1,47 @@
 import { inject, Injectable } from '@angular/core';
 import ExpenseDataService from '@data-services/expense-data.service';
-import GroupDataService from '@data-services/group-data.service';
+import UserDataService from '@data-services/user-data.service';
 import ExpenseStore from '@stores/expense.store';
+import FriendsStore from '@stores/friends.store';
 import GroupStore from '@stores/group.store';
+import UserStore from '@stores/user.store';
 
 @Injectable({
     providedIn: 'root',
 })
 export default class DataService {
-    private groupDataService = inject(GroupDataService);
+    private userStore = inject(UserStore);
     private groupStore = inject(GroupStore);
     private expenseStore = inject(ExpenseStore);
+    private friendsStore = inject(FriendsStore);
+    private userDataService = inject(UserDataService);
     private expensesDataService = inject(ExpenseDataService);
 
     public async initialiseData(): Promise<void> {
-        const groups = new Map();
-        const expenses = new Map();
-
         try {
-            const {data: readGroups, error, status} = await this.groupDataService.readGroups();
+            const expenses = new Map();
 
-            if (error) {
-                console.error(error, status);
+            const {data: readUser, error: errorUser, status: statusUser} = await this.userDataService.readUser();
+
+            if (errorUser) {
+                console.error(errorUser, statusUser);
             }
 
-            if (readGroups) {
-                await Promise.all(readGroups.map(async (group) => {
+            if (readUser) {
+                this.userStore.setUser(readUser.user);
+                this.friendsStore.setFriends(readUser.friends);
+                this.groupStore.setGroups(readUser.groups);
+
+                await Promise.all(readUser.groups.map(async (group) => {
                     try {
-                        groups.set(group.id, group);
+                        const {
+                            data: readExpenses,
+                            error: errorExpenses,
+                            status: StatusExpenses
+                        } = await this.expensesDataService.readExpenses(group.id);
 
-                        const {data: readExpenses, error, status} = await this.expensesDataService.readExpenses(group.id);
-
-                        if (error) {
-                            console.error(error, status);
+                        if (errorExpenses) {
+                            console.error(errorExpenses, StatusExpenses);
                         }
 
                         if (readExpenses) {
@@ -46,14 +55,15 @@ export default class DataService {
                         }
                     }
                 }));
+
+                this.expenseStore.setExpenses(expenses);
+            } else {
+                console.error('User not found');
             }
         } catch (error) {
             if (error instanceof Error) {
                 console.error(error);
             }
         }
-
-        this.groupStore.setGroups(groups);
-        this.expenseStore.setExpenses(expenses);
     }
 }

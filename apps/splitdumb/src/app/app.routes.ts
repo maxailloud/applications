@@ -10,6 +10,10 @@ const appRoutes: Route[] = [
         loadChildren: () => import('./pages/groups/groups.routes'),
     },
     {
+        path: 'friends',
+        loadChildren: () => import('./pages/friends/friends.routes'),
+    },
+    {
         path: '',
         redirectTo: 'home',
         pathMatch: 'full',

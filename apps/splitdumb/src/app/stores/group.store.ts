@@ -6,21 +6,21 @@ import { objectToCamel } from 'ts-case-convert';
     providedIn: 'root',
 })
 export default class GroupStore {
-    private groups = signal<Map<string, SelectGroup>>(new Map());
+    private groups = signal<SelectGroup[]>([]);
 
-    public getGroups(): Signal<Map<string, SelectGroup>> {
+    public getGroups(): Signal<SelectGroup[]> {
         return this.groups;
     }
 
     public getGroup(groupId: string): SelectGroup | undefined {
-        return this.groups().get(groupId);
+        return this.groups().find(group => group.id === groupId);
     }
 
     public addGroup(group: SelectGroup): void {
-        this.groups.update(groups => groups.set(group.id, objectToCamel(group)));
+        this.groups.update(groups => [...groups, objectToCamel(group)]);
     }
 
-    public setGroups(groups: Map<string, SelectGroup>): void {
+    public setGroups(groups: SelectGroup[]): void {
         this.groups.set(groups);
     }
 }

@@ -1,9 +1,8 @@
-import { Component, inject, input, computed } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import CreateExpenseComponent from '@components/create-expense/create-expense.component';
 import { RefresherCustomEvent } from '@ionic/angular';
 import {
-    IonBackButton,
     IonBadge,
     IonButton,
     IonButtons,
@@ -26,7 +25,7 @@ import { SelectGroup } from '@schema/schema';
 import ExpenseStore from '@stores/expense.store';
 
 @Component({
-    selector: 'splitdumb-detail',
+    selector: 'splitdumb-group-detail',
     standalone: true,
     templateUrl: './detail.page.html',
     styleUrls: ['./detail.page.scss'],
@@ -36,7 +35,6 @@ import ExpenseStore from '@stores/expense.store';
         IonIcon,
         IonButtons,
         IonToolbar,
-        IonBackButton,
         IonHeader,
         IonContent,
         IonMenuButton,
@@ -50,6 +48,7 @@ import ExpenseStore from '@stores/expense.store';
         RouterLink,
         IonBadge,
     ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DetailPage {
     private expenseStore = inject(ExpenseStore);

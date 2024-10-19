@@ -76,7 +76,7 @@ export default class CreateExpenseComponent implements OnInit {
                 description: this.createExpenseForm.controls.description.value,
                 amount: this.createExpenseForm.controls.amount.value,
                 currency: this.createExpenseForm.controls.currency.value,
-                creatorId: '5d6c47f3-60b6-4bc7-9511-4693b464ee00',
+                creatorId: 'b3c2a176-a050-48e9-bca3-1823d305f5d6',
                 groupId: this.group().id,
             });
 

@@ -1,4 +1,4 @@
-import { Component, computed, inject, viewChild, } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, viewChild, } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import CreateGroupComponent from '@components/create-group/create-group.component';
@@ -56,7 +56,8 @@ import GroupStore from '@stores/group.store';
         FormsModule,
         IonMenuToggle,
         CreateGroupComponent,
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class SideMenuComponent {
     public menu = viewChild.required<IonMenu>(IonMenu);

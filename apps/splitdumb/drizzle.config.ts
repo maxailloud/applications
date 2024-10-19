@@ -3,7 +3,7 @@ import { defineConfig } from 'drizzle-kit';
 
 const SPLITDUMB_PROJECT_PATH = 'apps/splitdumb';
 
-config({ path: SPLITDUMB_PROJECT_PATH + '/.env' });
+config({path: SPLITDUMB_PROJECT_PATH + '/.env'});
 
 export default defineConfig({
     dialect: 'postgresql',
