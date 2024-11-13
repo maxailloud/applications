@@ -15,6 +15,7 @@ export const users = pgTable(USER_PROFILE_TABLE_NAME,
             .primaryKey()
             .notNull()
             .references(() => authUsers.id, {onDelete: 'cascade'}),
+        email: text('email').notNull().unique(),
         username: text('username').notNull(),
     }
 );
@@ -24,8 +25,8 @@ export const usersRelations = relations(users, ({many}) => ({
     usersToGroups: many(usersGroups),
 }));
 
-export const FRIEND_TABLE_NAME = 'user_friends';
-export const usersToFriends = pgTable(FRIEND_TABLE_NAME,
+export const USER_FRIEND_TABLE_NAME = 'user_friends';
+export const usersToFriends = pgTable(USER_FRIEND_TABLE_NAME,
     {
         userId: uuid('user_id').notNull(),
         friendId: uuid('friend_id').notNull(),

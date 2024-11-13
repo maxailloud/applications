@@ -76,7 +76,7 @@ Deno.serve(async (req: Request) => {
                 throw newFriendError;
             }
 
-            const response = {friend: JSON.stringify({id: invitedUser.user.id, email: invitedUser.user.email, username: username})};
+            const response = {id: invitedUser.user.id, email: invitedUser.user.email, username: username};
             return new Response(
                 JSON.stringify(response, null, 2),
                 {

@@ -25,7 +25,6 @@ export default class GroupDataService {
             .from(GROUP_TABLE_NAME)
             .select('*')
             .eq('creator_id', this.userStore.getUser().id)
-            .single()
         ;
     }
 

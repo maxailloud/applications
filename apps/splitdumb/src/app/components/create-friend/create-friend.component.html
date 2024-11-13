@@ -13,7 +13,7 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-    <form id="add-friend" [formGroup]="createFriendForm" (ngSubmit)="create()">
+    <form id="add-friend" [formGroup]="createFriendForm" (ngSubmit)="invite()">
         <ion-list lines="none">
             <ion-item>
                 <ion-input
@@ -33,10 +33,9 @@
                     type="username"
                     name="username"
                     formControlName="username"
-                    label="Enter the username of your friend"
+                    label="Enter the username of your friend (if they don't already have an account)"
                     labelPlacement="stacked"
                     required="required"
-                    errorText="The username is required"
                 />
             </ion-item>
         </ion-list>

@@ -23,7 +23,7 @@ export default class DataService {
         try {
             const expenses = new Map();
 
-            const {data: readUser, error: errorUser, status: statusUser} = await this.userDataService.readUser();
+            const {data: readUser, error: errorUser, status: statusUser} = await this.userDataService.readConnectedUser();
 
             if (errorUser) {
                 console.error(errorUser, statusUser);
@@ -32,6 +32,7 @@ export default class DataService {
             if (readUser) {
                 this.userStore.setUser({
                     id: readUser.id,
+                    email: readUser.email,
                     username: readUser.username,
                 });
 

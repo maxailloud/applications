@@ -5,7 +5,7 @@ import { SelectUser } from '@schema/schema';
     providedIn: 'root',
 })
 export default class UserStore {
-    private user = signal<SelectUser>({id: '', username: ''});
+    private user = signal<SelectUser>({id: '', email: '', username: ''});
 
     public getUser(): SelectUser {
         return this.user();
