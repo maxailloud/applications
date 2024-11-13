@@ -8,6 +8,7 @@
         "serve": "nx serve --project",
         "build": "./scripts/build.sh",
         "supabase": "./scripts/supabase.sh",
+        "supabase-function": "./scripts/supabase-function.sh",
         "drizzle": "./scripts/drizzle.sh",
         "deploy": "./scripts/deploy.sh"
     },
@@ -27,7 +28,7 @@
         "@capacitor/status-bar": "^6.0.0",
         "@ionic/angular": "^8.3.1",
         "@nx/angular": "20.0.0",
-        "@supabase/supabase-js": "^2.45.4",
+        "@supabase/supabase-js": "^2.46.1",
         "daisyui": "^4.12.2",
         "drizzle-orm": "^0.31.4",
         "ionicons": "^7.4.0",

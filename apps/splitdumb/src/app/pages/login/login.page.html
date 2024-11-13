@@ -1,0 +1,61 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-title class="text-center">Splitdumb</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div class="flex items-center h-full">
+        <form class="w-full" (ngSubmit)="login()" [formGroup]="loginForm">
+            <div class="input-group">
+                <ion-item>
+                    <ion-input
+                        labelPlacement="stacked"
+                        aria-label="Email"
+                        type="email"
+                        placeholder="email@domain.com"
+                        formControlName="email"
+                    >
+                        <ion-icon slot="start" name="mail" aria-hidden="true"/>
+                    </ion-input>
+                </ion-item>
+
+                @let emailErrors = email.errors ;
+                @if (isFormSubmitted() && emailErrors) {
+                    <div class="errors">
+                        @if (emailErrors['required']) {
+                            <span>Email is required</span>
+                        }
+                        @if (emailErrors['email']) {
+                            <span>Email is invalid</span>
+                        }
+                    </div>
+                }
+
+                <ion-item lines="none">
+                    <ion-input aria-label="Password" type="password" placeholder="Password" formControlName="password">
+                        <ion-icon slot="start" name="lock-closed" aria-hidden="true"/>
+                        <ion-button fill="clear" slot="end" aria-label="Show/hide">
+                            <ion-icon slot="icon-only" name="eye" aria-hidden="true"/>
+                        </ion-button>
+                    </ion-input>
+                </ion-item>
+
+                @let passwordErrors = password.errors ;
+                @if (isFormSubmitted() && passwordErrors) {
+                    <div class="errors">
+                        @if (passwordErrors['required']) {
+                            <span>Password is required</span>
+                        }
+                        @if (passwordErrors['minlength']) {
+                            <span>Password needs to be 6 characters minimum</span>
+                        }
+                    </div>
+                }
+            </div>
+
+            <ion-button type="submit" expand="block">Log in</ion-button>
+            <ion-button type="button" expand="block" fill="clear" (click)="signUp()">Not yet a member? Sign up!</ion-button>
+        </form>
+    </div>
+</ion-content>

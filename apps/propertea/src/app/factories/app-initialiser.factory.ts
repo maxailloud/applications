@@ -8,7 +8,7 @@ export default function appInitialiserFactory(sessionService: SessionService, da
             return dataService.initialiseData();
         },
         () => {
-            console.log('Session not initialised, use needs to sign in');
+            console.log('Session not initialised, user needs to sign in');
         }
     );
 }

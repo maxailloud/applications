@@ -1,17 +1,17 @@
 <ion-header [translucent]="true">
     <ion-toolbar>
         <ion-buttons slot="start">
-            <ion-menu-button/>
+            <ion-back-button defaultHref="/friends"/>
         </ion-buttons>
 
-        <ion-title>{{ friend().firstname }}</ion-title>
+        <ion-title>{{ friend().username }}</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
     <ion-header collapse="condense">
         <ion-toolbar>
-            <ion-title size="large">{{ friend().firstname }}</ion-title>
+            <ion-title size="large">{{ friend().username }}</ion-title>
         </ion-toolbar>
     </ion-header>
 </ion-content>

@@ -1,8 +1,8 @@
-import { Component, computed, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import SideMenuComponent from '@components/side-menu/side-menu.component';
-import { IonApp, IonRouterOutlet, IonSplitPane, } from '@ionic/angular/standalone';
+import { IonApp, IonContent, IonRouterOutlet, IonSplitPane, } from '@ionic/angular/standalone';
 import DarkModeService from '@services/dark-mode.service';
-import GroupStore from '@stores/group.store';
+import { SessionService } from '@services/session.service';
 
 @Component({
     selector: 'splitdumb-root',
@@ -14,15 +14,16 @@ import GroupStore from '@stores/group.store';
         IonApp,
         IonSplitPane,
         SideMenuComponent,
+        IonContent,
     ],
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
+    private sessionService = inject(SessionService);
     private darkModeService = inject(DarkModeService);
-    private groupFromStore = inject(GroupStore).getGroups();
 
-    public groups = computed(() => this.groupFromStore());
+    public isSessionInitialised = this.sessionService.isSessionInitialised;
 
-    public ngOnInit(): void {
+    public constructor() {
         this.darkModeService.watchMediaQueryChange();
     }
 }

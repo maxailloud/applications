@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import ExpenseDataService from '@data-services/expense-data.service';
+import GroupDataService from '@data-services/group-data.service';
 import UserDataService from '@data-services/user-data.service';
 import ExpenseStore from '@stores/expense.store';
 import FriendsStore from '@stores/friends.store';
@@ -15,6 +16,7 @@ export default class DataService {
     private expenseStore = inject(ExpenseStore);
     private friendsStore = inject(FriendsStore);
     private userDataService = inject(UserDataService);
+    private groupDataService = inject(GroupDataService);
     private expensesDataService = inject(ExpenseDataService);
 
     public async initialiseData(): Promise<void> {
@@ -28,9 +30,29 @@ export default class DataService {
             }
 
             if (readUser) {
-                this.userStore.setUser(readUser.user);
+                this.userStore.setUser({
+                    id: readUser.id,
+                    username: readUser.username,
+                });
+
+                const {
+                    data: readCreatedGroups,
+                    error: errorCreatedGroups,
+                    status: statusCreatedGroups
+                } = await this.groupDataService.readUserCreatedGroups();
+
+                if (errorCreatedGroups) {
+                    console.error(errorCreatedGroups, statusCreatedGroups);
+                }
+
+                let userGroups = readUser.groups;
+
+                if (readCreatedGroups) {
+                    userGroups = userGroups.concat(readCreatedGroups);
+                }
+
                 this.friendsStore.setFriends(readUser.friends);
-                this.groupStore.setGroups(readUser.groups);
+                this.groupStore.setGroups(userGroups);
 
                 await Promise.all(readUser.groups.map(async (group) => {
                     try {

@@ -22,7 +22,7 @@
                 [routerLink]="['/friends', 'detail', friend.id]"
                 routerDirection="root"
             >
-                <ion-label>{{ friend.firstname + ' ' + friend.lastname}}</ion-label>
+                <ion-label>{{ friend.username}}</ion-label>
             </ion-item>
         } @empty {
             <ion-item lines="none">
@@ -30,4 +30,10 @@
             </ion-item>
         }
     </ion-list>
+
+    <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+        <ion-fab-button (click)="openModal()">
+            <ion-icon name="add"/>
+        </ion-fab-button>
+    </ion-fab>
 </ion-content>

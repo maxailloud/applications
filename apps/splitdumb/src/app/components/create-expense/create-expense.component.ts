@@ -18,6 +18,7 @@ import {
 } from '@ionic/angular/standalone';
 import { SelectGroup } from '@schema/schema';
 import ExpenseStore from '@stores/expense.store';
+import UserStore from '@stores/user.store';
 
 @Component({
     selector: 'splitdumb-create-expense',
@@ -45,11 +46,12 @@ import ExpenseStore from '@stores/expense.store';
 })
 export default class CreateExpenseComponent implements OnInit {
     public group = input.required<SelectGroup>();
-    public nameInput = viewChild.required<IonInput>("descriptionInput");
+    public nameInput = viewChild.required<IonInput>('descriptionInput');
 
     private modalController = inject(ModalController);
     private expenseDataService = inject(ExpenseDataService);
     private expenseStore = inject(ExpenseStore);
+    private userStore = inject(UserStore);
 
     public createExpenseForm = ExpenseFormFactory.createForm();
 
@@ -76,7 +78,7 @@ export default class CreateExpenseComponent implements OnInit {
                 description: this.createExpenseForm.controls.description.value,
                 amount: this.createExpenseForm.controls.amount.value,
                 currency: this.createExpenseForm.controls.currency.value,
-                creatorId: 'b3c2a176-a050-48e9-bca3-1823d305f5d6',
+                creatorId: this.userStore.getUser().id,
                 groupId: this.group().id,
             });
 

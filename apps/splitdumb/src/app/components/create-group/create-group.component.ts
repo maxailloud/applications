@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, viewChild, OnInit, } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import CurrencySelectorComponent from '@components/currency-selector/currency-selector.component';
 import IconSelectorComponent from '@components/icon-selector/icon-selector.component';
@@ -28,12 +28,13 @@ import {
 } from '@ionic/angular/standalone';
 import { CurrencySymbolPipe } from '@pipes/currency-symbol.pipe';
 import GroupStore from '@stores/group.store';
+import SessionStore from '@stores/session.store';
+import UserStore from '@stores/user.store';
 
 @Component({
     selector: 'splitdumb-create-group',
     standalone: true,
     templateUrl: './create-group.component.html',
-    styleUrls: ['./create-group.component.scss'],
     imports: [
         IonModal,
         IonButton,
@@ -60,21 +61,18 @@ import GroupStore from '@stores/group.store';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class CreateGroupComponent {
-    public nameInput = viewChild.required<IonInput>("nameInput");
+    public nameInput = viewChild.required<IonInput>('nameInput');
 
     private modalController = inject(ModalController);
     private groupDataService = inject(GroupDataService);
     private groupStore = inject(GroupStore);
     private router = inject(Router);
+    private userStore = inject(UserStore);
 
     public createGroupForm = GroupFormFactory.createForm();
 
     public ionViewDidEnter(): void {
         void this.nameInput().setFocus();
-    }
-
-    public get name(): FormControl<string> {
-        return this.createGroupForm.controls.name;
     }
 
     public cancel(): Promise<boolean> {
@@ -88,7 +86,7 @@ export default class CreateGroupComponent {
                 name: this.createGroupForm.controls.name.value,
                 icon: this.createGroupForm.controls.icon.value,
                 currency: this.createGroupForm.controls.currency.value,
-                creatorId: 'b3c2a176-a050-48e9-bca3-1823d305f5d6',
+                creatorId: this.userStore.getUser().id,
             });
 
             if (error) {

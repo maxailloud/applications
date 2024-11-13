@@ -31,7 +31,6 @@ import GroupStore from '@stores/group.store';
     selector: 'splitdumb-side-menu',
     standalone: true,
     templateUrl: './side-menu.component.html',
-    styleUrls: ['./side-menu.component.scss'],
     imports: [
         RouterModule,
         IonContent,

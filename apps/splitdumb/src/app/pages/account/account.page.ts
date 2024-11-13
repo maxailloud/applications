@@ -1,12 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import {
+    IonButton,
     IonButtons,
     IonContent,
-    IonHeader, IonMenuButton, IonTitle, IonToggle, IonToolbar,
+    IonHeader,
+    IonIcon,
+    IonMenuButton,
+    IonTitle,
+    IonToggle,
+    IonToolbar,
 } from '@ionic/angular/standalone';
 import DarkModeService from '@services/dark-mode.service';
+import { SessionService } from '@services/session.service';
 
 @Component({
     selector: 'splitdumb-account',
@@ -23,17 +31,26 @@ import DarkModeService from '@services/dark-mode.service';
         FormsModule,
         IonButtons,
         IonMenuButton,
+        IonButton,
+        IonIcon,
+        RouterLink,
     ]
 })
-export class AccountPage implements OnInit {
+export default class AccountPage implements OnInit {
     private darkModeService = inject(DarkModeService);
-    public paletteToggle = false;
+    private sessionService = inject(SessionService);
+
+    public darkModeToggle = false;
 
     public ngOnInit(): void {
-        this.paletteToggle = this.darkModeService.isDarkModeOn();
+        this.darkModeToggle = this.darkModeService.isDarkModeOn();
     }
 
-    public toggleChange(ev: CustomEvent): void {
-        this.darkModeService.toggleDarkPalette(ev.detail.checked);
+    public toggleDarkMode(ev: CustomEvent): void {
+        this.darkModeService.toggleDarkMode(ev.detail.checked);
+    }
+
+    public async logOut(): Promise<void> {
+        await this.sessionService.signOut();
     }
 }

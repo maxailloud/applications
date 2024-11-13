@@ -8,17 +8,14 @@ const authUsers = authSchema.table('users', {
     email: text('email').notNull(),
 });
 
-export const USER_TABLE_NAME = 'users';
-export const users = pgTable(USER_TABLE_NAME,
+export const USER_PROFILE_TABLE_NAME = 'user_profiles';
+export const users = pgTable(USER_PROFILE_TABLE_NAME,
     {
         id: uuid('id')
             .primaryKey()
-            .defaultRandom(),
-        firstname: text('firstname').notNull(),
-        lastname: text('lastname').notNull(),
-        userId: uuid('user_id')
             .notNull()
             .references(() => authUsers.id, {onDelete: 'cascade'}),
+        username: text('username').notNull(),
     }
 );
 
@@ -62,6 +59,7 @@ export const groups = pgTable(GROUP_TABLE_NAME, {
 });
 
 export const groupsRelations = relations(groups, ({many}) => ({
+    usersToCreatedGroups: many(users),
     usersToGroups: many(usersGroups),
 }));
 

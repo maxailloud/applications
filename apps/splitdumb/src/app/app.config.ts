@@ -1,7 +1,7 @@
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import {
     APP_INITIALIZER,
-    ApplicationConfig, isDevMode,
+    ApplicationConfig, importProvidersFrom, isDevMode,
     provideExperimentalZonelessChangeDetection,
 } from '@angular/core';
 import { PreloadAllModules, provideRouter, RouteReuseStrategy, withComponentInputBinding, withPreloading } from '@angular/router';
@@ -31,7 +31,7 @@ export const appConfig: ApplicationConfig = {
             provide: SupabaseClient,
             useFactory: () => createClient(
                 process.env['SPLITDUMB_SUPABASE_URL'] as string,
-                process.env['SPLITDUMB_SUPABASE_KEY'] as string,
+                process.env['SPLITDUMB_SUPABASE_ANON_KEY'] as string,
             ),
         },
         {

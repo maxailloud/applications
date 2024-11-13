@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input, } from '@angular/core';
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonTitle, IonToolbar, } from '@ionic/angular/standalone';
+import { IonBackButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, } from '@ionic/angular/standalone';
 import { SelectUser } from '@schema/schema';
 
 @Component({
@@ -12,11 +12,11 @@ import { SelectUser } from '@schema/schema';
         IonHeader,
         IonToolbar,
         IonButtons,
-        IonMenuButton,
         IonTitle,
+        IonBackButton,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DetailPage {
+export default class DetailPage {
     public friend = input.required<SelectUser>();
 }

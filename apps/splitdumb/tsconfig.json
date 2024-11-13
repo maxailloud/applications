@@ -21,6 +21,7 @@
             "@resolvers/*": ["apps/splitdumb/src/app/resolvers/*"],
             "@components/*": ["apps/splitdumb/src/app/components/*"],
             "@pipes/*": ["apps/splitdumb/src/app/pipes/*"],
+            "@guards/*": ["apps/splitdumb/src/app/guards/*"],
             "@schema/*": ["apps/splitdumb/db/*"]
         }
     },

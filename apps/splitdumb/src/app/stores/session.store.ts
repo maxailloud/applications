@@ -4,7 +4,7 @@ import { AuthSession, Session } from '@supabase/supabase-js';
 @Injectable({
     providedIn: 'root',
 })
-export class SessionStore {
+export default class SessionStore {
     private _session!: AuthSession;
 
     public getSession(): AuthSession {

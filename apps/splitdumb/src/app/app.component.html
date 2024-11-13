@@ -1,7 +1,15 @@
 <ion-app>
-    <ion-split-pane contentId="main-content" when="xl">
-        <splitdumb-side-menu/>
+    @if (isSessionInitialised()) {
+        <ion-split-pane contentId="main-content" when="xl">
+            <splitdumb-side-menu/>
 
-        <ion-router-outlet id="main-content"/>
-    </ion-split-pane>
+            <ion-router-outlet id="main-content"/>
+        </ion-split-pane>
+    } @else {
+        <div class="ion-page">
+            <ion-content class="ion-padding">
+                <ion-router-outlet/>
+            </ion-content>
+        </div>
+    }
 </ion-app>

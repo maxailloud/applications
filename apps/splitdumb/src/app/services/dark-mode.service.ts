@@ -12,19 +12,19 @@ export default class DarkModeService {
 
         // Initialize the dark palette based on the initial
         // value of the prefers-color-scheme media query
-        this.initializeDarkPalette(prefersDark.matches);
+        this.initializeDarkMode(prefersDark.matches);
 
         // Listen for changes to the prefers-color-scheme media query
-        prefersDark.addEventListener('change', (mediaQuery) => this.initializeDarkPalette(mediaQuery.matches));
+        prefersDark.addEventListener('change', (mediaQuery) => this.initializeDarkMode(mediaQuery.matches));
     }
 
     // Check/uncheck the toggle and update the palette based on isDark
-    public initializeDarkPalette(isDark: boolean): void {
-        this.toggleDarkPalette(isDark);
+    public initializeDarkMode(isDark: boolean): void {
+        this.toggleDarkMode(isDark);
     }
 
     // Add or remove the "ion-palette-dark" class on the html element
-    public toggleDarkPalette(darkModeOn: boolean): void {
+    public toggleDarkMode(darkModeOn: boolean): void {
         this.darkModeOn = darkModeOn;
 
         document.documentElement.classList.toggle('ion-palette-dark', this.darkModeOn);
