@@ -20,11 +20,28 @@ export default class GroupDataService {
         }).select().single();
     }
 
-    public async readUserCreatedGroups(): Promise<PostgrestSingleResponse<SelectGroup[]>> {
+    public async updateGroup(groupId: string, groupData: Partial<SelectGroup>):
+    Promise<PostgrestSingleResponse<null>> {
         return this.supabaseClient
             .from(GROUP_TABLE_NAME)
-            .select('*')
+            .update(groupData)
+            .eq('id', groupId)
+        ;
+    }
+
+    public async readCreatedUserGroups(): Promise<PostgrestSingleResponse<SelectGroup[]>> {
+        return this.supabaseClient
+            .from(GROUP_TABLE_NAME)
+            .select('*, creator:user_profiles!creator_id(*), users:users_groups!inner(...user_id(*))')
             .eq('creator_id', this.userStore.getUser().id)
+        ;
+    }
+
+    public async readUserGroups(): Promise<PostgrestSingleResponse<SelectGroup[]>> {
+        return this.supabaseClient
+            .from(GROUP_TABLE_NAME)
+            .select('*, creator:user_profiles!creator_id(*), users:users_groups!inner(...user_id(*))')
+            .eq('users_groups.user_id', this.userStore.getUser().id)
         ;
     }
 

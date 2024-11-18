@@ -1,21 +1,15 @@
-<ion-header>
+<ion-header [translucent]="true">
     <ion-toolbar>
         <ion-buttons slot="start">
-            <ion-button (click)="cancel()">
-                <ion-icon slot="icon-only" name="close"/>
-            </ion-button>
+            <ion-back-button [defaultHref]="'/groups/' + group().id + '/detail'"/>
         </ion-buttons>
 
-        <ion-title>Create a group</ion-title>
-
-        <ion-buttons slot="end">
-            <ion-button type="submit" form="create-group" [strong]="true">Create</ion-button>
-        </ion-buttons>
+        <ion-title>{{ group().name }} settings</ion-title>
     </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-    <form id="create-group" [formGroup]="createGroupForm" (ngSubmit)="create()">
+<ion-content class="ion-padding" [fullscreen]="true">
+    <form id="update-group-settings" [formGroup]="updateGroupForm">
         <ion-list lines="none">
             <ion-item>
                 <ion-grid>
@@ -33,7 +27,7 @@
                                 type="text"
                                 name="name"
                                 formControlName="name"
-                                label="Enter the name of the group"
+                                label="Name of the group"
                                 labelPlacement="stacked"
                                 required="required"
                                 errorText="The name is required"
@@ -52,4 +46,23 @@
             </ion-item>
         </ion-list>
     </form>
+
+    <ion-list>
+        <ion-item-divider>
+            <ion-label>Members</ion-label>
+
+            <ion-button slot="end">
+                <ion-icon slot="icon-only" name="add-circle"/>
+            </ion-button>
+        </ion-item-divider>
+        @for (user of users(); track user.id; ) {
+            <ion-item>
+                <ion-label>{{ user.username }}</ion-label>
+            </ion-item>
+        } @empty {
+            <ion-item lines="none">
+                <ion-label>No users in the group.</ion-label>
+            </ion-item>
+        }
+    </ion-list>
 </ion-content>

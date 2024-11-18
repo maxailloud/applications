@@ -37,25 +37,35 @@ export default class DataService {
                 });
 
                 const {
+                    data: readGroups,
+                    error: errorGroups,
+                    status: statusGroups
+                } = await this.groupDataService.readUserGroups();
+
+                if (errorGroups) {
+                    console.error(errorGroups, statusGroups);
+                }
+
+                const {
                     data: readCreatedGroups,
                     error: errorCreatedGroups,
                     status: statusCreatedGroups
-                } = await this.groupDataService.readUserCreatedGroups();
+                } = await this.groupDataService.readCreatedUserGroups();
 
                 if (errorCreatedGroups) {
                     console.error(errorCreatedGroups, statusCreatedGroups);
                 }
 
-                let userGroups = readUser.groups;
+                let userGroups = readGroups ?? [];
 
-                if (readCreatedGroups) {
-                    userGroups = userGroups.concat(readCreatedGroups);
+                if (readGroups) {
+                    userGroups = userGroups.concat(readCreatedGroups ?? []);
                 }
 
                 this.friendsStore.setFriends(readUser.friends);
                 this.groupStore.setGroups(userGroups);
 
-                await Promise.all(readUser.groups.map(async (group) => {
+                await Promise.all(userGroups.map(async (group) => {
                     try {
                         const {
                             data: readExpenses,

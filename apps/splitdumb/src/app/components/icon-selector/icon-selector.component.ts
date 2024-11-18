@@ -1,9 +1,18 @@
-import { Component, forwardRef, signal, viewChild, ViewChild, WritableSignal, } from '@angular/core';
+import { Component, forwardRef, signal, viewChild, WritableSignal, } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import {
     IonButton,
-    IonButtons, IonCol, IonContent, IonFooter, IonGrid,
-    IonHeader, IonIcon, IonItem, IonLabel, IonList, IonModal, IonNote, IonSegment, IonSegmentButton, IonTitle, IonToolbar,
+    IonButtons,
+    IonContent,
+    IonFooter,
+    IonHeader,
+    IonIcon,
+    IonLabel,
+    IonModal,
+    IonSegment,
+    IonSegmentButton,
+    IonTitle,
+    IonToolbar,
 } from '@ionic/angular/standalone';
 import type { SegmentChangeEventDetail } from '@ionic/core/components';
 import * as ionicons from 'ionicons/dist/ionicons.json';
@@ -34,12 +43,7 @@ interface Icon {
         IonButtons,
         IonTitle,
         IonContent,
-        IonList,
-        IonItem,
         IonLabel,
-        IonNote,
-        IonGrid,
-        IonCol,
         IonFooter,
         IonSegment,
         IonSegmentButton,

@@ -1,4 +1,5 @@
 import { inject, Injectable, signal, WritableSignal } from '@angular/core';
+import { Router } from '@angular/router';
 import SessionStore from '@stores/session.store';
 import { AuthChangeEvent, SupabaseClient } from '@supabase/supabase-js';
 
@@ -8,6 +9,7 @@ import { AuthChangeEvent, SupabaseClient } from '@supabase/supabase-js';
 export class SessionService {
     private supabaseClient = inject(SupabaseClient);
     private sessionStore = inject(SessionStore);
+    private router = inject(Router);
 
     public isSessionInitialised: WritableSignal<boolean> = signal(false);
 
@@ -34,6 +36,7 @@ export class SessionService {
             (event: AuthChangeEvent) => {
                 if (event === 'SIGNED_OUT') {
                     this.isSessionInitialised.set(false);
+                    void this.router.navigateByUrl('/');
                 }
             }
         );
@@ -50,6 +53,7 @@ export class SessionService {
         if (data.session) {
             this.sessionStore.setSession(data.session);
             this.isSessionInitialised.set(true);
+            void this.router.navigateByUrl('/');
         }
     }
 

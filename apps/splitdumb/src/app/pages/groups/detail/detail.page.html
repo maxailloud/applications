@@ -5,7 +5,7 @@
         </ion-buttons>
 
         <ion-buttons slot="end">
-            <ion-button routerLink="config">
+            <ion-button [routerLink]="['/groups', group().id, 'settings']">
                 <ion-icon slot="icon-only" name="cog"/>
             </ion-button>
         </ion-buttons>

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, viewChild, OnInit, } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, viewChild, } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import CurrencySelectorComponent from '@components/currency-selector/currency-selector.component';
@@ -28,12 +28,12 @@ import {
 } from '@ionic/angular/standalone';
 import { CurrencySymbolPipe } from '@pipes/currency-symbol.pipe';
 import GroupStore from '@stores/group.store';
-import SessionStore from '@stores/session.store';
 import UserStore from '@stores/user.store';
 
 @Component({
     selector: 'splitdumb-create-group',
     standalone: true,
+    styleUrl: './create-group.component.scss',
     templateUrl: './create-group.component.html',
     imports: [
         IonModal,
@@ -96,7 +96,7 @@ export default class CreateGroupComponent {
             if (group) {
                 this.groupStore.addGroup(group);
                 void this.modalController.dismiss(group, ModalStatus.DISMISS_CONFIRM);
-                void this.router.navigate(['groups', 'detail', group.id]);
+                void this.router.navigate(['groups', group.id, 'detail']);
             }
         }
     }

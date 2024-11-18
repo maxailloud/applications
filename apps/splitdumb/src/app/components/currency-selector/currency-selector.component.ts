@@ -7,7 +7,6 @@ import {
     IonContent,
     IonHeader,
     IonIcon,
-    IonInput,
     IonItem,
     IonLabel,
     IonList,
@@ -34,7 +33,6 @@ import { CurrencySymbolPipe } from '@pipes/currency-symbol.pipe';
         IonList,
         IonItem,
         IonModal,
-        IonInput,
         CurrencySymbolPipe,
         IonLabel,
         IonNote,
@@ -55,6 +53,7 @@ export default class CurrencySelectorComponent implements ControlValueAccessor {
     public currencies: WritableSignal<Currency[]> = signal([]);
     public currency!: Currency; // select a default one
     public isDisabled = false;
+    public isSelectorOpen = signal<boolean>(false);
 
     private _value?: string;
     private onChangeCallback!: (value?: string) => void;
@@ -117,5 +116,9 @@ export default class CurrencySelectorComponent implements ControlValueAccessor {
         this.value = selectedCurrency.id;
 
         void this.modal().dismiss(this.currency, 'confirm');
+    }
+
+    public openSelector(): void {
+        this.isSelectorOpen.set(true);
     }
 }

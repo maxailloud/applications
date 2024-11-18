@@ -5,15 +5,17 @@
                 <ion-icon slot="icon-only" name="close"/>
             </ion-button>
         </ion-buttons>
+
         <ion-title>Add an expense</ion-title>
+
         <ion-buttons slot="end">
-            <ion-button type="submit" form="create-group" [strong]="true">Add</ion-button>
+            <ion-button type="submit" form="create-expense" [strong]="true">Add</ion-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-    <form id="create-group" [formGroup]="createExpenseForm" (ngSubmit)="create()">
+    <form id="create-expense" [formGroup]="createExpenseForm" (ngSubmit)="create()">
         <ion-list lines="none">
             <ion-item>
                 <ion-input
