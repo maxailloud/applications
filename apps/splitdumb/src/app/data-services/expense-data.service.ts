@@ -19,10 +19,19 @@ export default class ExpenseDataService {
     }
 
     public async readExpenses(groupId: string): Promise<PostgrestSingleResponse<SelectExpense[]>> {
-        return this.supabaseClient.from(EXPENSE_TABLE_NAME).select().eq('group_id', groupId);
+        return this.supabaseClient
+            .from(EXPENSE_TABLE_NAME)
+            .select()
+            .eq('group_id', groupId)
+            .order('occurred_at', {ascending: false})
+        ;
     }
 
     public async deleteExpense(groupId: string): Promise<PostgrestSingleResponse<null>> {
-        return this.supabaseClient.from(EXPENSE_TABLE_NAME).delete().eq('id', groupId);
+        return this.supabaseClient
+            .from(EXPENSE_TABLE_NAME)
+            .delete()
+            .eq('id', groupId)
+        ;
     }
 }
