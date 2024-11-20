@@ -87,7 +87,6 @@ export default class LoginPage {
                 await this.toastService.createErrorToast((error as AuthError).message)
                 this.isFormSubmitted.set(false);
             } finally {
-                console.log('finally');
                 this.isFormSubmitted.set(true);
                 await this.loadingController.dismiss();
             }

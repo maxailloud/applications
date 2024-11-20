@@ -3,7 +3,7 @@ import ExpenseDataService from '@data-services/expense-data.service';
 import GroupDataService from '@data-services/group-data.service';
 import UserDataService from '@data-services/user-data.service';
 import ExpenseStore from '@stores/expense.store';
-import FriendsStore from '@stores/friends.store';
+import ContactsStore from '@stores/contactsStore';
 import GroupStore from '@stores/group.store';
 import UserStore from '@stores/user.store';
 
@@ -14,7 +14,7 @@ export default class DataService {
     private userStore = inject(UserStore);
     private groupStore = inject(GroupStore);
     private expenseStore = inject(ExpenseStore);
-    private friendsStore = inject(FriendsStore);
+    private contactsStore = inject(ContactsStore);
     private userDataService = inject(UserDataService);
     private groupDataService = inject(GroupDataService);
     private expensesDataService = inject(ExpenseDataService);
@@ -62,7 +62,7 @@ export default class DataService {
                     userGroups = userGroups.concat(readCreatedGroups ?? []);
                 }
 
-                this.friendsStore.setFriends(readUser.friends);
+                this.contactsStore.setContacts(readUser.contacts);
                 this.groupStore.setGroups(userGroups);
 
                 await Promise.all(userGroups.map(async (group) => {

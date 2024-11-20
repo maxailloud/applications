@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, OnInit } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import ContactsSelectorComponent from '@components/contacts-selector/contacts-selector.component';
 import CurrencySelectorComponent from '@components/currency-selector/currency-selector.component';
 import IconSelectorComponent from '@components/icon-selector/icon-selector.component';
 import GroupDataService from '@data-services/group-data.service';
@@ -8,17 +8,13 @@ import { GroupFormFactory } from '@forms/group-form.factory';
 import { GroupForm } from '@forms/group-form.type';
 import {
     IonBackButton,
-    IonButton,
     IonButtons,
     IonCol,
     IonContent,
     IonGrid,
     IonHeader,
-    IonIcon,
     IonInput,
     IonItem,
-    IonItemDivider,
-    IonLabel,
     IonList,
     IonRow,
     IonTitle,
@@ -26,7 +22,6 @@ import {
 } from '@ionic/angular/standalone';
 import { SelectGroup, SelectUser } from '@schema/schema';
 import ToastService from '@services/toast.service';
-import GroupStore from '@stores/group.store';
 import { debounceTime } from 'rxjs';
 
 @Component({
@@ -36,7 +31,6 @@ import { debounceTime } from 'rxjs';
     styleUrls: ['./settings.page.scss'],
     imports: [
         IonItem,
-        IonLabel,
         IonHeader,
         IonToolbar,
         IonButtons,
@@ -44,7 +38,6 @@ import { debounceTime } from 'rxjs';
         IonTitle,
         IonList,
         IonBackButton,
-        IonButton,
         IonGrid,
         IonRow,
         IonCol,
@@ -52,22 +45,16 @@ import { debounceTime } from 'rxjs';
         IonInput,
         CurrencySelectorComponent,
         ReactiveFormsModule,
-        IonItemDivider,
-        IonIcon,
+        ContactsSelectorComponent,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SettingsPage implements OnInit {
-    public group = input.required<SelectGroup & { users: SelectUser[] }>();
+    public group = input.required<SelectGroup & { members: SelectUser[] }>();
 
     private groupDataService = inject(GroupDataService);
-    private groupStore = inject(GroupStore);
-    private router = inject(Router);
     private toastService = inject(ToastService);
 
-    public users = computed(() => {
-        return this.group().users;
-    });
     public updateGroupForm!: FormGroup<GroupForm>;
 
     public ngOnInit(): void {
@@ -125,6 +112,35 @@ export class SettingsPage implements OnInit {
                 this.group().currency = value;
 
                 this.updateGroupForm.controls.currency.enable({emitEvent: false});
+            });
+
+        this.updateGroupForm.controls.members.valueChanges
+            .subscribe(async (newMembers) => {
+                this.updateGroupForm.controls.members.disable({emitEvent: false});
+
+                const groupMembers = this.group().members;
+                const newMembersToAdd = newMembers.filter(newMember => !groupMembers.includes(newMember));
+                const membersToRemove = groupMembers.filter(newMember => !newMembers.includes(newMember));
+
+                if (newMembersToAdd.length > 0) {
+                    const {error} = await this.groupDataService.addGroupMembers(this.group().id, newMembersToAdd.map(user => user.id));
+
+                    if (error) {
+                        await this.toastService.createErrorToast(`Error adding members to the group`);
+                    }
+                }
+
+                if (membersToRemove.length > 0) {
+                    const {error} = await this.groupDataService.removeGroupMembers(this.group().id, membersToRemove.map(user => user.id));
+
+                    if (error) {
+                        await this.toastService.createErrorToast(`Error removing members to the group`);
+                    }
+                }
+
+                this.group().members = newMembers;
+
+                this.updateGroupForm.controls.members.enable({emitEvent: false});
             });
     }
 }

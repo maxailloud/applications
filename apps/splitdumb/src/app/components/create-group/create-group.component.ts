@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import CurrencySelectorComponent from '@components/currency-selector/currency-selector.component';
 import IconSelectorComponent from '@components/icon-selector/icon-selector.component';
 import GroupDataService from '@data-services/group-data.service';
-import { ModalStatus } from '@enums/modal-status.enum';
+import ModalStatus from '@enums/modal-status.enum';
 import { GroupFormFactory } from '@forms/group-form.factory';
 import {
     IonButton,

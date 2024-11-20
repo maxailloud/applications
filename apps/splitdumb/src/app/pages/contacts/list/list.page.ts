@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import CreateExpenseComponent from '@components/create-expense/create-expense.component';
-import CreateFriendComponent from '@components/create-friend/create-friend.component';
+import CreateContactComponent from '@components/create-contact/create-contact.component';
 import {
     IonButtons,
     IonContent, IonFab, IonFabButton,
@@ -14,10 +14,10 @@ import {
     IonTitle,
     IonToolbar, ModalController,
 } from '@ionic/angular/standalone';
-import FriendsStore from '@stores/friends.store';
+import ContactsStore from '@stores/contactsStore';
 
 @Component({
-    selector: 'splitdumb-friends-list',
+    selector: 'splitdumb-contacts-list',
     standalone: true,
     templateUrl: './list.page.html',
     styleUrls: ['./list.page.scss'],
@@ -40,12 +40,12 @@ import FriendsStore from '@stores/friends.store';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class ListPage {
-    public friends = inject(FriendsStore).getFriends();
+    public contacts = inject(ContactsStore).getContacts();
     private modalController = inject(ModalController);
 
     public async openModal(): Promise<void> {
         const modal = await this.modalController.create({
-            component: CreateFriendComponent,
+            component: CreateContactComponent,
         });
 
         void modal.present();

@@ -44,25 +44,15 @@
                     required="required"
                 />
             </ion-item>
+
+            <ion-item>
+                <splitdumb-contacts-selector
+                    class="w-full"
+                    formControlName="members"
+                />
+            </ion-item>
         </ion-list>
     </form>
 
-    <ion-list>
-        <ion-item-divider>
-            <ion-label>Members</ion-label>
 
-            <ion-button slot="end">
-                <ion-icon slot="icon-only" name="add-circle"/>
-            </ion-button>
-        </ion-item-divider>
-        @for (user of users(); track user.id; ) {
-            <ion-item>
-                <ion-label>{{ user.username }}</ion-label>
-            </ion-item>
-        } @empty {
-            <ion-item lines="none">
-                <ion-label>No users in the group.</ion-label>
-            </ion-item>
-        }
-    </ion-list>
 </ion-content>

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, viewChild, } from
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import CreateGroupComponent from '@components/create-group/create-group.component';
-import { ModalStatus } from '@enums/modal-status.enum';
+import ModalStatus from '@enums/modal-status.enum';
 import {
     IonButton,
     IonButtons,
@@ -18,12 +18,9 @@ import {
     IonMenu,
     IonMenuToggle,
     IonRow,
-    IonTabBar,
-    IonTabButton,
-    IonTabs,
     IonTitle,
-    IonToggle,
-    IonToolbar, ModalController
+    IonToolbar,
+    ModalController
 } from '@ionic/angular/standalone';
 import GroupStore from '@stores/group.store';
 
@@ -48,13 +45,8 @@ import GroupStore from '@stores/group.store';
         IonGrid,
         IonRow,
         IonCol,
-        IonTabs,
-        IonTabBar,
-        IonTabButton,
-        IonToggle,
         FormsModule,
         IonMenuToggle,
-        CreateGroupComponent,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

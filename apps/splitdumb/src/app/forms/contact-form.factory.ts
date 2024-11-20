@@ -1,9 +1,9 @@
 import { FormControl, FormGroup, Validators, } from '@angular/forms';
-import { FriendForm } from '@forms/friend-form.type';
+import { ContactForm } from '@forms/contact-form.type';
 
-export class FriendFormFactory {
-    public static createForm(): FormGroup<FriendForm> {
-        return new FormGroup<FriendForm>({
+export default class ContactFormFactory {
+    public static createForm(): FormGroup<ContactForm> {
+        return new FormGroup<ContactForm>({
             email: new FormControl('', {nonNullable: true, validators: [Validators.required, Validators.email]}),
             username: new FormControl('', {nonNullable: true}),
         });

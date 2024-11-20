@@ -18,5 +18,5 @@ import { SelectUser } from '@schema/schema';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class DetailPage {
-    public friend = input.required<SelectUser>();
+    public contact = input.required<SelectUser>();
 }

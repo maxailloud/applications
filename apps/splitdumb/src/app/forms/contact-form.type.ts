@@ -1,6 +1,6 @@
 import { FormControl } from '@angular/forms';
 
-export interface FriendForm {
+export interface ContactForm {
     email: FormControl<string>;
     username: FormControl<string>;
 }

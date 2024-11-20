@@ -7,7 +7,7 @@ const groupResolver: ResolveFn<SelectGroup> = async (
     route: ActivatedRouteSnapshot,
 ) => {
     const groupId = route.paramMap.get('groupId');
-    const redirectCommand = new RedirectCommand(inject(Router).parseUrl('/'), { skipLocationChange: true, });
+    const redirectCommand = new RedirectCommand(inject(Router).parseUrl('/'));
 
     if (!groupId) {
         return redirectCommand;

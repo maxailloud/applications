@@ -19,8 +19,8 @@ const appRoutes: Route[] = [
         canMatch: [authGuard],
     },
     {
-        path: 'friends',
-        loadChildren: () => import('@pages/friends/friends.routes'),
+        path: 'contacts',
+        loadChildren: () => import('@pages/contacts/contacts.routes'),
         canMatch: [authGuard],
     },
     {

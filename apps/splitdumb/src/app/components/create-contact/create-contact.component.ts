@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, inject, viewChild, } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import FriendDataService from '@data-services/friend-data.service';
+import ContactDataService from '@data-services/contact-data.service';
 import UserDataService from '@data-services/user-data.service';
-import { ModalStatus } from '@enums/modal-status.enum';
-import { FriendFormFactory } from '@forms/friend-form.factory';
+import ModalStatus from '@enums/modal-status.enum';
+import ContactFormFactory from '@forms/contact-form.factory';
 import {
     IonButton,
     IonButtons,
@@ -13,20 +13,18 @@ import {
     IonInput,
     IonItem,
     IonList,
-    IonModal,
     IonTitle,
     IonToolbar,
     ModalController,
 } from '@ionic/angular/standalone';
-import FriendsStore from '@stores/friends.store';
+import ContactsStore from '@stores/contactsStore';
 import { FunctionsFetchError, FunctionsHttpError, FunctionsRelayError } from '@supabase/supabase-js';
 
 @Component({
-    selector: 'splitdumb-create-friend',
+    selector: 'splitdumb-create-contact',
     standalone: true,
-    templateUrl: './create-friend.component.html',
+    templateUrl: './create-contact.component.html',
     imports: [
-        IonModal,
         IonButton,
         IonButtons,
         IonContent,
@@ -41,43 +39,43 @@ import { FunctionsFetchError, FunctionsHttpError, FunctionsRelayError } from '@s
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class CreateFriendComponent {
+export default class CreateContactComponent {
     public emailInput = viewChild.required<IonInput>('emailInput');
 
     private modalController = inject(ModalController);
-    private friendDataService = inject(FriendDataService);
+    private contactDataService = inject(ContactDataService);
     private userDataService = inject(UserDataService);
-    private friendsStore = inject(FriendsStore);
+    private contactsStore = inject(ContactsStore);
 
-    public createFriendForm = FriendFormFactory.createForm();
+    public createContactForm = ContactFormFactory.createForm();
 
     public async ionViewDidEnter(): Promise<void> {
         void this.emailInput().setFocus();
     }
 
     public cancel(): Promise<boolean> {
-        this.createFriendForm.reset();
+        this.createContactForm.reset();
         return this.modalController.dismiss(null, ModalStatus.DISMISS_CANCEL);
     }
 
     public async invite(): Promise<void> {
-        if (this.createFriendForm.valid) {
-            const {data: existingFriend} = await this.userDataService.readUser(this.createFriendForm.controls.email.value);
+        if (this.createContactForm.valid) {
+            const {data: existingContact} = await this.userDataService.readUser(this.createContactForm.controls.email.value);
 
-            if (existingFriend) {
-                const {data: invitedFriend, error, status: errorStatus} = await this.friendDataService.addFriend(existingFriend.id);
+            if (existingContact) {
+                const {data: invitedContact, error, status: errorStatus} = await this.contactDataService.addContact(existingContact.id);
 
                 if (error) {
                     console.error(error, errorStatus);
                 } else {
-                    this.friendsStore.addFriend(existingFriend);
+                    this.contactsStore.addContact(existingContact);
                 }
 
-                void this.modalController.dismiss(invitedFriend, ModalStatus.DISMISS_CONFIRM);
+                void this.modalController.dismiss(invitedContact, ModalStatus.DISMISS_CONFIRM);
             } else {
-                const {data: invitedFriend, error} = await this.friendDataService.inviteFriend(
-                    this.createFriendForm.controls.email.value,
-                    this.createFriendForm.controls.username.value,
+                const {data: invitedContact, error} = await this.contactDataService.inviteContact(
+                    this.createContactForm.controls.email.value,
+                    this.createContactForm.controls.username.value,
                 );
 
                 if (error instanceof FunctionsHttpError) {
@@ -89,9 +87,9 @@ export default class CreateFriendComponent {
                     console.log('Fetch error:', error.message);
                 }
 
-                if (invitedFriend) {
-                    this.friendsStore.addFriend(invitedFriend);
-                    void this.modalController.dismiss(invitedFriend, ModalStatus.DISMISS_CONFIRM);
+                if (invitedContact) {
+                    this.contactsStore.addContact(invitedContact);
+                    void this.modalController.dismiss(invitedContact, ModalStatus.DISMISS_CONFIRM);
                 }
             }
         }

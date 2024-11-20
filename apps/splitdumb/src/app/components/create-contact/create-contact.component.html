@@ -5,15 +5,15 @@
                 <ion-icon slot="icon-only" name="close"></ion-icon>
             </ion-button>
         </ion-buttons>
-        <ion-title>Add a friend</ion-title>
+        <ion-title>Add a contact</ion-title>
         <ion-buttons slot="end">
-            <ion-button type="submit" form="add-friend" [strong]="true">Add</ion-button>
+            <ion-button type="submit" form="add-contact" [strong]="true">Add</ion-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-    <form id="add-friend" [formGroup]="createFriendForm" (ngSubmit)="invite()">
+    <form id="add-contact" [formGroup]="createContactForm" (ngSubmit)="invite()">
         <ion-list lines="none">
             <ion-item>
                 <ion-input
@@ -21,7 +21,7 @@
                     type="email"
                     name="email"
                     formControlName="email"
-                    label="Enter the email of your friend"
+                    label="Enter the email of your contact"
                     labelPlacement="stacked"
                     required="required"
                     errorText="The email is required"
@@ -33,7 +33,7 @@
                     type="username"
                     name="username"
                     formControlName="username"
-                    label="Enter the username of your friend (if they don't already have an account)"
+                    label="Enter the username of your contact (if they don't already have an account)"
                     labelPlacement="stacked"
                     required="required"
                 />

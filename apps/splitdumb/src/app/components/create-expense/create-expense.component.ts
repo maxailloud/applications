@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, input, OnInit, viewChild, }
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import CurrencySelectorComponent from '@components/currency-selector/currency-selector.component';
 import ExpenseDataService from '@data-services/expense-data.service';
-import { ModalStatus } from '@enums/modal-status.enum';
+import ModalStatus from '@enums/modal-status.enum';
 import { ExpenseFormFactory } from '@forms/expense-form.factory';
 import {
     IonButton,
@@ -11,7 +11,6 @@ import {
     IonHeader, IonIcon,
     IonInput,
     IonItem, IonList,
-    IonModal, IonSelect, IonSelectOption,
     IonTitle,
     IonToolbar,
     ModalController,
@@ -26,7 +25,6 @@ import UserStore from '@stores/user.store';
     templateUrl: './create-expense.component.html',
     styleUrls: ['./create-expense.component.scss'],
     imports: [
-        IonModal,
         IonButton,
         IonButtons,
         IonContent,
@@ -38,8 +36,6 @@ import UserStore from '@stores/user.store';
         IonIcon,
         ReactiveFormsModule,
         IonList,
-        IonSelect,
-        IonSelectOption,
         CurrencySelectorComponent,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,

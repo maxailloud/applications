@@ -1,0 +1,64 @@
+<ion-list lines="full">
+    <ion-item-divider>
+        <ion-label>Members</ion-label>
+
+        <ion-button slot="end" (click)="openSelector()" [disabled]="isDisabled()">
+            <ion-icon slot="icon-only" name="add-circle"/>
+        </ion-button>
+    </ion-item-divider>
+    @for (user of value; track user.id; ) {
+        <ion-item-sliding>
+            <ion-item [button]="true">
+                <ion-label>{{ user.username }}</ion-label>
+            </ion-item>
+            <ion-item-options slot="end">
+                <ion-item-option color="danger" expandable="true" (click)="removeUserFromGroup(user)">
+                    <ion-icon slot="icon-only" name="trash-outline"/>
+                </ion-item-option>
+            </ion-item-options>
+        </ion-item-sliding>
+    } @empty {
+        <ion-item lines="none">
+            <ion-label>No users in the group.</ion-label>
+        </ion-item>
+    }
+</ion-list>
+
+<ion-modal [isOpen]="isSelectorOpen()" (ionModalDidDismiss)="isSelectorOpen.set(false)">
+    <ng-template>
+        <ion-header>
+            <ion-toolbar>
+                <ion-buttons slot="start">
+                    <ion-button type="button" (click)="cancel()">Cancel</ion-button>
+                </ion-buttons>
+
+                <ion-title>Select contact</ion-title>
+
+                <ion-buttons slot="end">
+                    <ion-button type="button" [strong]="true" (click)="validateSelect()">Add</ion-button>
+                </ion-buttons>
+            </ion-toolbar>
+        </ion-header>
+
+        <ion-content class="ion-padding">
+            <ion-list>
+                @for (contact of selectableContacts(); track contact.id; ) {
+                    <ion-item>
+                        <ion-checkbox
+                            labelPlacement="end"
+                            justify="start"
+                            aria-label="Toggle task completion"
+                            [value]="contact"
+                            [checked]="selectedContactIds.includes(contact.id)"
+                            (ionChange)="toggleUser($event)"
+                        >{{ contact.username }}</ion-checkbox>
+                    </ion-item>
+                } @empty {
+                    <ion-item>
+                        <ion-label>No contacts available</ion-label>
+                    </ion-item>
+                }
+            </ion-list>
+        </ion-content>
+    </ng-template>
+</ion-modal>

@@ -21,26 +21,26 @@ export const users = pgTable(USER_PROFILE_TABLE_NAME,
 );
 
 export const usersRelations = relations(users, ({many}) => ({
-    usersToFriends: many(usersToFriends),
+    usersToContacts: many(usersToContacts),
     usersToGroups: many(usersGroups),
 }));
 
-export const USER_FRIEND_TABLE_NAME = 'user_friends';
-export const usersToFriends = pgTable(USER_FRIEND_TABLE_NAME,
+export const USER_CONTACT_TABLE_NAME = 'user_contacts';
+export const usersToContacts = pgTable(USER_CONTACT_TABLE_NAME,
     {
         userId: uuid('user_id').notNull(),
-        friendId: uuid('friend_id').notNull(),
+        contactId: uuid('contact_id').notNull(),
     },
     (table) => ({
-        pk: primaryKey({columns: [table.userId, table.friendId]}),
+        pk: primaryKey({columns: [table.userId, table.contactId]}),
         userfk: foreignKey({
-            name: 'user_friends',
+            name: 'user_contacts',
             columns: [table.userId],
             foreignColumns: [users.id],
         }).onDelete('cascade'),
-        friendfk: foreignKey({
-            name: 'friend_users',
-            columns: [table.friendId],
+        contactfk: foreignKey({
+            name: 'contact_users',
+            columns: [table.contactId],
             foreignColumns: [users.id],
         }).onDelete('cascade'),
     }),
@@ -106,13 +106,13 @@ export const usersToGroupsRelations = relations(usersGroups, ({one}) => ({
     }),
 }));
 
-export const usersToFriendsRelations = relations(usersToFriends, ({one}) => ({
-    friend: one(users, {
-        fields: [usersToFriends.friendId],
+export const usersToContactsRelations = relations(usersToContacts, ({one}) => ({
+    contact: one(users, {
+        fields: [usersToContacts.contactId],
         references: [users.id],
     }),
     user: one(users, {
-        fields: [usersToFriends.userId],
+        fields: [usersToContacts.userId],
         references: [users.id],
     }),
 }));
