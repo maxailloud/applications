@@ -1,14 +1,13 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
 import { LoginFormFactory } from '@forms/login-form.factory';
 import {
     IonButton,
-    IonButtons,
     IonContent,
     IonHeader,
     IonIcon,
     IonInput,
+    IonInputPasswordToggle,
     IonItem,
     IonTitle,
     IonToolbar,
@@ -26,7 +25,6 @@ import { AuthError } from '@supabase/auth-js/dist/module/lib/errors';
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
         ReactiveFormsModule,
-        IonButtons,
         IonHeader,
         IonTitle,
         IonToolbar,
@@ -35,7 +33,7 @@ import { AuthError } from '@supabase/auth-js/dist/module/lib/errors';
         IonInput,
         IonButton,
         IonIcon,
-        RouterLink,
+        IonInputPasswordToggle,
     ],
 })
 export default class LoginPage {
