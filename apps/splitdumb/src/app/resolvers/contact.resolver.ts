@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, RedirectCommand, ResolveFn, Router } from '@angular/router';
 import { SelectUser } from '@schema/schema';
-import ContactsStore from '@stores/contactsStore';
+import ContactsStore from '@stores/contacts.store';
 
 const contactResolver: ResolveFn<SelectUser> = async (
     route: ActivatedRouteSnapshot,

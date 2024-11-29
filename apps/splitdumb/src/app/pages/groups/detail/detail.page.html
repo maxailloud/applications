@@ -29,7 +29,7 @@
         @for (expense of expenses(); track expense.id; ) {
             <ion-item>
                 <ion-icon aria-hidden="true" color="danger" slot="start" name="pizza-outline" size="large"/>
-                <ion-label>{{ expense.description }}</ion-label>
+                <ion-label>{{ expense.description }}<br/>{{ expense.payee.username }}</ion-label>
                 <ion-badge slot="end">{{ expense.amount }}€</ion-badge>
             </ion-item>
         } @empty {

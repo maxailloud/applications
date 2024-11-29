@@ -31,8 +31,8 @@ interface Icon {
 @Component({
     selector: 'splitdumb-icon-selector',
     standalone: true,
-    templateUrl: './icon-selector.component.html',
-    styleUrls: ['./icon-selector.component.scss'],
+    templateUrl: './input-icon-selector.component.html',
+    styleUrls: ['./input-icon-selector.component.scss'],
     imports: [
         ReactiveFormsModule,
         IonButton,
@@ -51,12 +51,12 @@ interface Icon {
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => IconSelectorComponent),
+            useExisting: forwardRef(() => InputIconSelectorComponent),
             multi: true,
         },
     ],
 })
-export default class IconSelectorComponent implements ControlValueAccessor {
+export default class InputIconSelectorComponent implements ControlValueAccessor {
     public modal = viewChild.required<IonModal>(IonModal);
 
     public icons: Record<IconType.Outline | IconType.Filled | IconType.Sharp, Icon[]> = {

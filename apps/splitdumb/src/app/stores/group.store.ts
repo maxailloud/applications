@@ -1,26 +1,26 @@
 import { Injectable, Signal, signal } from '@angular/core';
-import { SelectGroup } from '@schema/schema';
+import GroupExtended from '@interfaces/group-extended';
 import { objectToCamel } from 'ts-case-convert';
 
 @Injectable({
     providedIn: 'root',
 })
 export default class GroupStore {
-    private groups = signal<SelectGroup[]>([]);
+    private groups = signal<GroupExtended[]>([]);
 
-    public getGroups(): Signal<SelectGroup[]> {
+    public getGroups(): Signal<GroupExtended[]> {
         return this.groups;
     }
 
-    public getGroup(groupId: string): SelectGroup | undefined {
+    public getGroup(groupId: string): GroupExtended | undefined {
         return this.groups().find(group => group.id === groupId);
     }
 
-    public addGroup(group: SelectGroup): void {
+    public addGroup(group: GroupExtended): void {
         this.groups.update(groups => [...groups, objectToCamel(group)]);
     }
 
-    public setGroups(groups: SelectGroup[]): void {
+    public setGroups(groups: GroupExtended[]): void {
         this.groups.set(groups);
     }
 }

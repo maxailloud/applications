@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import UserWithContacts from '@interfaces/user-with-contacts';
+import UserExtended from '@interfaces/user-extended';
 import { SelectUser, USER_PROFILE_TABLE_NAME } from '@schema/schema';
 import SessionStore from '@stores/session.store';
 import { PostgrestSingleResponse, SupabaseClient } from '@supabase/supabase-js';
@@ -11,7 +11,7 @@ export default class UserDataService {
     private supabaseClient = inject(SupabaseClient);
     private sessionStore = inject(SessionStore);
 
-    public async readConnectedUser(): Promise<PostgrestSingleResponse<UserWithContacts>> {
+    public async readConnectedUser(): Promise<PostgrestSingleResponse<UserExtended>> {
         return this.supabaseClient
             .from(USER_PROFILE_TABLE_NAME)
             .select('*, contacts:user_contacts!user_id!inner(...contact_id(*))')

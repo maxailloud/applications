@@ -3,7 +3,7 @@ import ExpenseDataService from '@data-services/expense-data.service';
 import GroupDataService from '@data-services/group-data.service';
 import UserDataService from '@data-services/user-data.service';
 import ExpenseStore from '@stores/expense.store';
-import ContactsStore from '@stores/contactsStore';
+import ContactsStore from '@stores/contacts.store';
 import GroupStore from '@stores/group.store';
 import UserStore from '@stores/user.store';
 

@@ -14,7 +14,7 @@ import {
     IonTitle,
     IonToolbar, ModalController,
 } from '@ionic/angular/standalone';
-import ContactsStore from '@stores/contactsStore';
+import ContactsStore from '@stores/contacts.store';
 
 @Component({
     selector: 'splitdumb-contacts-list',

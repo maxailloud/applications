@@ -1,21 +1,28 @@
-import { ChangeDetectionStrategy, Component, inject, input, OnInit, viewChild, } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import CurrencySelectorComponent from '@components/currency-selector/currency-selector.component';
+import { ChangeDetectionStrategy, Component, computed, inject, input, OnInit, viewChild, } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import CurrencySelectorComponent from '@components/input-currency-selector/input-currency-selector.component';
+import InputPayeeSelectorComponent from '@components/input-payee-selector/input-payee-selector.component';
 import ExpenseDataService from '@data-services/expense-data.service';
+import ExpenseSplittingType from '@enums/expense-splitting-type.enum';
 import ModalStatus from '@enums/modal-status.enum';
 import { ExpenseFormFactory } from '@forms/expense-form.factory';
+import { ExpenseForm } from '@forms/expense-form.type';
+import GroupExtended from '@interfaces/group-extended';
 import {
     IonButton,
     IonButtons,
     IonContent,
-    IonHeader, IonIcon,
+    IonHeader,
+    IonIcon,
     IonInput,
-    IonItem, IonList,
+    IonItem,
+    IonList,
+    IonRadio,
+    IonRadioGroup,
     IonTitle,
     IonToolbar,
     ModalController,
 } from '@ionic/angular/standalone';
-import { SelectGroup } from '@schema/schema';
 import ExpenseStore from '@stores/expense.store';
 import UserStore from '@stores/user.store';
 
@@ -37,11 +44,14 @@ import UserStore from '@stores/user.store';
         ReactiveFormsModule,
         IonList,
         CurrencySelectorComponent,
+        InputPayeeSelectorComponent,
+        IonRadioGroup,
+        IonRadio,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class CreateExpenseComponent implements OnInit {
-    public group = input.required<SelectGroup>();
+    public group = input.required<GroupExtended>();
     public nameInput = viewChild.required<IonInput>('descriptionInput');
 
     private modalController = inject(ModalController);
@@ -49,10 +59,26 @@ export default class CreateExpenseComponent implements OnInit {
     private expenseStore = inject(ExpenseStore);
     private userStore = inject(UserStore);
 
-    public createExpenseForm = ExpenseFormFactory.createForm();
+    public createExpenseForm!: FormGroup<ExpenseForm>;
+    public expenseSplittingType = ExpenseSplittingType;
+    public otherMember = computed(() => {
+        const groupMembers = this.group().members;
+        let otherMember = undefined;
+
+        if (groupMembers.length === 1) {
+            if (groupMembers[0].id === this.userStore.getUser().id) {
+                otherMember = this.group().creator;
+            } else {
+                otherMember = groupMembers[0];
+            }
+        }
+
+        return otherMember;
+    });
 
     public ngOnInit(): void {
-        this.createExpenseForm = ExpenseFormFactory.createForm({currency: this.group().currency});
+        this.createExpenseForm = ExpenseFormFactory
+            .createForm(this.userStore.getUser(), {currency: this.group().currency, payeeId: this.userStore.getUser().id});
     }
 
     public ionViewDidEnter(): void {
@@ -70,11 +96,28 @@ export default class CreateExpenseComponent implements OnInit {
 
     public async create(): Promise<void> {
         if (this.createExpenseForm.valid) {
+            let payeeId = this.createExpenseForm.controls.payee.value.id;
+            const otherMember = this.otherMember();
+
+            if (undefined !== otherMember) {
+                switch (this.createExpenseForm.controls.splitType.value) {
+                    case ExpenseSplittingType.PAID_SPLIT_EQUALLY:
+                    case ExpenseSplittingType.OWED_FULL_AMOUNT:
+                        payeeId = this.userStore.getUser().id;
+                        break;
+                    case ExpenseSplittingType.OTHER_PAID_SPLIT_EQUALLY:
+                    case ExpenseSplittingType.OTHER_OWED_FULL_AMOUNT:
+                        payeeId = otherMember.id;
+                        break;
+                }
+            }
+
             const {data: expense, error} = await this.expenseDataService.createExpense({
                 description: this.createExpenseForm.controls.description.value,
                 amount: this.createExpenseForm.controls.amount.value,
                 currency: this.createExpenseForm.controls.currency.value,
                 creatorId: this.userStore.getUser().id,
+                payeeId: payeeId,
                 groupId: this.group().id,
             });
 

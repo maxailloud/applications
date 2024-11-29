@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { EXPENSE_TABLE_NAME, InsertExpense, SelectExpense } from '@schema/schema';
+import ExpenseExtended from '@interfaces/expense-extended';
+import { EXPENSE_TABLE_NAME, InsertExpense } from '@schema/schema';
 import { PostgrestSingleResponse, SupabaseClient } from '@supabase/supabase-js';
 
 @Injectable({
@@ -8,20 +9,21 @@ import { PostgrestSingleResponse, SupabaseClient } from '@supabase/supabase-js';
 export default class ExpenseDataService {
     private supabaseClient = inject(SupabaseClient);
 
-    public async createExpense(expense: InsertExpense): Promise<PostgrestSingleResponse<SelectExpense>> {
+    public async createExpense(expense: InsertExpense): Promise<PostgrestSingleResponse<ExpenseExtended>> {
         return this.supabaseClient.from(EXPENSE_TABLE_NAME).insert({
             description: expense.description,
             amount: expense.amount,
             currency: expense.currency,
             group_id: expense.groupId,
             creator_id: expense.creatorId,
-        }).select().single();
+            payee_id: expense.payeeId,
+        }).select('*, payee:user_profiles!payee_id(*)').single();
     }
 
-    public async readExpenses(groupId: string): Promise<PostgrestSingleResponse<SelectExpense[]>> {
+    public async readExpenses(groupId: string): Promise<PostgrestSingleResponse<ExpenseExtended[]>> {
         return this.supabaseClient
             .from(EXPENSE_TABLE_NAME)
-            .select()
+            .select('*, payee:user_profiles!payee_id(*)')
             .eq('group_id', groupId)
             .order('occurred_at', {ascending: false})
         ;

@@ -91,6 +91,9 @@ export const expenses = pgTable(EXPENSE_TABLE_NAME, {
     creatorId: uuid('creator_id')
         .notNull()
         .references(() => users.id, {onDelete: 'cascade'}),
+    payeeId: uuid('payee_id')
+        .notNull()
+        .references(() => users.id, {onDelete: 'cascade'}),
     occurredAt: timestamp('occurred_at').notNull().defaultNow(),
     createdAt: timestamp('created_at').notNull().defaultNow(),
     updatedAt: timestamp('updated_at').notNull().defaultNow(),

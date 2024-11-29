@@ -1,0 +1,13 @@
+ion-radio::part(container) {
+    display: none;
+    visibility: hidden;
+}
+
+ion-radio::part(label) {
+    flex-grow: 1;
+    margin-right: 0;
+}
+
+ion-icon {
+    --ionicon-stroke-width: 80px;
+}

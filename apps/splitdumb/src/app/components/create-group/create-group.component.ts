@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, inject, viewChild, } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import CurrencySelectorComponent from '@components/currency-selector/currency-selector.component';
-import IconSelectorComponent from '@components/icon-selector/icon-selector.component';
+import CurrencySelectorComponent from '@components/input-currency-selector/input-currency-selector.component';
+import IconSelectorComponent from '@components/input-icon-selector/input-icon-selector.component';
 import GroupDataService from '@data-services/group-data.service';
 import ModalStatus from '@enums/modal-status.enum';
 import { GroupFormFactory } from '@forms/group-form.factory';
@@ -16,17 +16,12 @@ import {
     IonIcon,
     IonInput,
     IonItem,
-    IonLabel,
     IonList,
-    IonModal,
     IonRow,
-    IonSelect,
-    IonSelectOption,
     IonTitle,
     IonToolbar,
     ModalController,
 } from '@ionic/angular/standalone';
-import { CurrencySymbolPipe } from '@pipes/currency-symbol.pipe';
 import GroupStore from '@stores/group.store';
 import UserStore from '@stores/user.store';
 
@@ -36,7 +31,6 @@ import UserStore from '@stores/user.store';
     styleUrl: './create-group.component.scss',
     templateUrl: './create-group.component.html',
     imports: [
-        IonModal,
         IonButton,
         IonButtons,
         IonContent,
@@ -49,13 +43,9 @@ import UserStore from '@stores/user.store';
         ReactiveFormsModule,
         IonList,
         CurrencySelectorComponent,
-        IonSelect,
-        IonSelectOption,
-        IonLabel,
         IonGrid,
         IonRow,
         IonCol,
-        CurrencySymbolPipe,
         IconSelectorComponent,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,

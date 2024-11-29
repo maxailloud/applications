@@ -1,1 +1,1 @@
-export { add, addCircle, caretDownOutline, close, cog, paperPlane, people, pizzaOutline } from "ionicons/icons";
+export { add, addCircle, caretDownOutline, close, cog, lockClosed, mail, people, pizzaOutline, trashOutline } from "ionicons/icons";

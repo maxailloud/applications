@@ -17,7 +17,7 @@ import {
     IonToolbar,
     ModalController,
 } from '@ionic/angular/standalone';
-import ContactsStore from '@stores/contactsStore';
+import ContactsStore from '@stores/contacts.store';
 import { FunctionsFetchError, FunctionsHttpError, FunctionsRelayError } from '@supabase/supabase-js';
 
 @Component({

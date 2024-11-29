@@ -1,0 +1,5 @@
+<ion-select aria-label="User who paid the expense" label="Paid by" interface="popover" [value]="value">
+    @for (member of groupMembers(); track member.id) {
+        <ion-select-option [value]="member">{{member.username}}</ion-select-option>
+    }
+</ion-select>

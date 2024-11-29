@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { GROUP_TABLE_NAME, InsertGroup, SelectGroup, USER_GROUP_TABLE_NAME } from '@schema/schema';
+import GroupExtended from '@interfaces/group-extended';
+import { GROUP_TABLE_NAME, InsertGroup, USER_GROUP_TABLE_NAME } from '@schema/schema';
 import UserStore from '@stores/user.store';
 import { PostgrestSingleResponse, SupabaseClient } from '@supabase/supabase-js';
 
@@ -11,16 +12,16 @@ export default class GroupDataService {
     private userStore = inject(UserStore);
 
     public async createGroup(group: InsertGroup):
-    Promise<PostgrestSingleResponse<SelectGroup>> {
+    Promise<PostgrestSingleResponse<GroupExtended>> {
         return this.supabaseClient.from(GROUP_TABLE_NAME).insert({
             name: group.name,
             creator_id: group.creatorId,
             icon: group.icon,
             currency: group.currency,
-        }).select().single();
+        }).select('*, creator:user_profiles!creator_id(*), members:users_groups(...user_id(*))').single();
     }
 
-    public async updateGroup(groupId: string, groupData: Partial<SelectGroup>):
+    public async updateGroup(groupId: string, groupData: Partial<GroupExtended>):
     Promise<PostgrestSingleResponse<null>> {
         return this.supabaseClient
             .from(GROUP_TABLE_NAME)
@@ -53,7 +54,7 @@ export default class GroupDataService {
         ;
     }
 
-    public async readCreatedUserGroups(): Promise<PostgrestSingleResponse<SelectGroup[]>> {
+    public async readCreatedUserGroups(): Promise<PostgrestSingleResponse<GroupExtended[]>> {
         return this.supabaseClient
             .from(GROUP_TABLE_NAME)
             .select('*, creator:user_profiles!creator_id(*), members:users_groups(...user_id(*))')
@@ -61,7 +62,7 @@ export default class GroupDataService {
         ;
     }
 
-    public async readUserGroups(): Promise<PostgrestSingleResponse<SelectGroup[]>> {
+    public async readUserGroups(): Promise<PostgrestSingleResponse<GroupExtended[]>> {
         return this.supabaseClient
             .from(GROUP_TABLE_NAME)
             .select('*, creator:user_profiles!creator_id(*), members:users_groups!inner(...user_id(*))')

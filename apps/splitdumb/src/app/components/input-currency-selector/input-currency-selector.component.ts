@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, forwardRef, input, signal, viewChild, WritableSignal, } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
-import Currency from '@components/currency-selector/currency.interface';
+import Currency from '@components/input-currency-selector/currency.interface';
 import {
     IonButton,
     IonButtons,
@@ -20,7 +20,7 @@ import { CurrencySymbolPipe } from '@pipes/currency-symbol.pipe';
 @Component({
     selector: 'splitdumb-currency-selector',
     standalone: true,
-    templateUrl: './currency-selector.component.html',
+    templateUrl: './input-currency-selector.component.html',
     imports: [
         ReactiveFormsModule,
         IonHeader,
@@ -40,13 +40,13 @@ import { CurrencySymbolPipe } from '@pipes/currency-symbol.pipe';
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => CurrencySelectorComponent),
+            useExisting: forwardRef(() => InputCurrencySelectorComponent),
             multi: true,
         },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class CurrencySelectorComponent implements ControlValueAccessor {
+export default class InputCurrencySelectorComponent implements ControlValueAccessor {
     public modal = viewChild.required<IonModal>(IonModal);
     public onlyButton = input<boolean>(false);
 

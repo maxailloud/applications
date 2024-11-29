@@ -16,12 +16,12 @@ import {
 } from '@ionic/angular/standalone';
 import type { CheckboxChangeEventDetail } from '@ionic/core/components';
 import { SelectUser } from '@schema/schema';
-import ContactsStore from '@stores/contactsStore';
+import ContactsStore from '@stores/contacts.store';
 
 @Component({
     selector: 'splitdumb-contacts-selector',
     standalone: true,
-    templateUrl: './contacts-selector.component.html',
+    templateUrl: './input-contacts-selector.component.html',
     imports: [
         ReactiveFormsModule,
         IonHeader,
@@ -44,13 +44,13 @@ import ContactsStore from '@stores/contactsStore';
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => ContactsSelectorComponent),
+            useExisting: forwardRef(() => InputContactsSelectorComponent),
             multi: true,
         },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class ContactsSelectorComponent implements ControlValueAccessor {
+export default class InputContactsSelectorComponent implements ControlValueAccessor {
     public modal = viewChild.required<IonModal>(IonModal);
 
     public availableContacts = inject(ContactsStore).getContacts();

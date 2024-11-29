@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import CreateExpenseComponent from '@components/create-expense/create-expense.component';
+import GroupExtended from '@interfaces/group-extended';
 import { RefresherCustomEvent } from '@ionic/angular';
 import {
     IonBadge,
@@ -21,7 +22,6 @@ import {
     IonToolbar,
     ModalController
 } from '@ionic/angular/standalone';
-import { SelectGroup } from '@schema/schema';
 import ExpenseStore from '@stores/expense.store';
 
 @Component({
@@ -54,7 +54,7 @@ export class DetailPage {
     private expenseStore = inject(ExpenseStore);
     private modalController = inject(ModalController);
 
-    public group = input.required<SelectGroup>();
+    public group = input.required<GroupExtended>();
 
     public expenses = computed(() => {
         return this.expenseStore.getAllExpenses()().get(this.group().id) ?? [];

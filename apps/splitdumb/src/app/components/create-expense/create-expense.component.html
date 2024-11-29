@@ -46,5 +46,55 @@
                 />
             </ion-item>
         </ion-list>
+
+        <ion-list lines="none" class="mt-3">
+            @let member = otherMember();
+            @if (undefined !== member) {
+                <ion-radio-group formControlName="splitType" class="split-options">
+                    <ion-radio [value]="expenseSplittingType.PAID_SPLIT_EQUALLY" class="split-option w-full">
+                        <ion-button type="button" expand="full">
+                            @if (createExpenseForm.controls.splitType.value === expenseSplittingType.PAID_SPLIT_EQUALLY) {
+                                <ion-icon name="checkmark-outline" slot="start"/>
+                            }
+                            You paid, split equally.
+                        </ion-button>
+                    </ion-radio>
+                    <ion-radio [value]="expenseSplittingType.OWED_FULL_AMOUNT" class="split-option w-full">
+                        <ion-button type="button" expand="full">
+                            @if (createExpenseForm.controls.splitType.value === expenseSplittingType.OWED_FULL_AMOUNT) {
+                                <ion-icon name="checkmark-outline" slot="start"/>
+                            }
+                            You are owed the full amount.
+                        </ion-button>
+                    </ion-radio>
+                    <ion-radio [value]="expenseSplittingType.OTHER_PAID_SPLIT_EQUALLY" class="split-option w-full">
+                        <ion-button type="button" expand="full">
+                            @if (createExpenseForm.controls.splitType.value === expenseSplittingType.OTHER_PAID_SPLIT_EQUALLY) {
+                                <ion-icon name="checkmark-outline" slot="start"/>
+                            }
+                            {{ member.username }} paid, split equally.
+                        </ion-button>
+                    </ion-radio>
+                    <ion-radio [value]="expenseSplittingType.OTHER_OWED_FULL_AMOUNT" class="split-option w-full">
+                        <ion-button type="button" expand="full">
+                            @if (createExpenseForm.controls.splitType.value === expenseSplittingType.OTHER_OWED_FULL_AMOUNT) {
+                                <ion-icon name="checkmark-outline" slot="start"/>
+                            }
+                            {{ member.username }} is owed the full amount.
+                        </ion-button>
+                    </ion-radio>
+                </ion-radio-group>
+            } @else {
+                <ion-item>
+                    <splitdumb-payee-selector
+                        formControlName="payee"
+                        [group]="group()"
+                    />
+                </ion-item>
+                <ion-item>
+                    <p>Split equally</p>
+                </ion-item>
+            }
+        </ion-list>
     </form>
 </ion-content>

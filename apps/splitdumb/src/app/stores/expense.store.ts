@@ -1,32 +1,32 @@
 import { Injectable, Signal, signal } from '@angular/core';
-import { SelectExpense } from '@schema/schema';
+import ExpenseExtended from '@interfaces/expense-extended';
 import { objectToCamel } from 'ts-case-convert';
 
 @Injectable({
     providedIn: 'root',
 })
 export default class ExpenseStore {
-    private expenses = signal<Map<string, SelectExpense[]>>(new Map());
+    private expenses = signal<Map<string, ExpenseExtended[]>>(new Map());
 
-    public getAllExpenses(): Signal<Map<string, SelectExpense[]>> {
+    public getAllExpenses(): Signal<Map<string, ExpenseExtended[]>> {
         return this.expenses;
     }
-    public getExpenses(groupId: string): SelectExpense[] {
+    public getExpenses(groupId: string): ExpenseExtended[] {
         return this.expenses().get(groupId) ?? [];
     }
 
-    public setExpenses(expenses: Map<string, SelectExpense[]>): void {
+    public setExpenses(expenses: Map<string, ExpenseExtended[]>): void {
         this.expenses.set(expenses);
     }
 
-    public addExpense(expense: SelectExpense): void {
+    public addExpense(expense: ExpenseExtended): void {
         expense = objectToCamel(expense);
 
         this.expenses.update(expenses => {
             const groupExpenses = expenses.get(expense.groupId);
 
             if (groupExpenses) {
-                expenses.set(expense.groupId, [...groupExpenses, expense]);
+                expenses.set(expense.groupId, [expense, ...groupExpenses]);
             } else {
                 expenses.set(expense.groupId, [expense]);
             }

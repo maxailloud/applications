@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component, inject, input, OnInit } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import ContactsSelectorComponent from '@components/contacts-selector/contacts-selector.component';
-import CurrencySelectorComponent from '@components/currency-selector/currency-selector.component';
-import IconSelectorComponent from '@components/icon-selector/icon-selector.component';
+import ContactsSelectorComponent from '@components/input-contacts-selector/input-contacts-selector.component';
+import CurrencySelectorComponent from '@components/input-currency-selector/input-currency-selector.component';
+import IconSelectorComponent from '@components/input-icon-selector/input-icon-selector.component';
 import GroupDataService from '@data-services/group-data.service';
 import { GroupFormFactory } from '@forms/group-form.factory';
 import { GroupForm } from '@forms/group-form.type';
+import GroupExtended from '@interfaces/group-extended';
 import {
     IonBackButton,
     IonButtons,
@@ -20,7 +21,6 @@ import {
     IonTitle,
     IonToolbar,
 } from '@ionic/angular/standalone';
-import { SelectGroup, SelectUser } from '@schema/schema';
 import ToastService from '@services/toast.service';
 import { debounceTime } from 'rxjs';
 
@@ -50,7 +50,7 @@ import { debounceTime } from 'rxjs';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SettingsPage implements OnInit {
-    public group = input.required<SelectGroup & { members: SelectUser[] }>();
+    public group = input.required<GroupExtended>();
 
     private groupDataService = inject(GroupDataService);
     private toastService = inject(ToastService);
