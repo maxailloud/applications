@@ -4,7 +4,7 @@
     "license": "MIT",
     "homepage": "https://maxailloud.github.io/applications",
     "scripts": {
-        "start": "nx serve --verbose --project",
+        "start": "nx serve --project",
         "serve": "nx serve --project",
         "build": "./scripts/build.sh",
         "supabase": "./scripts/supabase.sh",

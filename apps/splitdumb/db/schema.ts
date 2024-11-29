@@ -99,6 +99,22 @@ export const expenses = pgTable(EXPENSE_TABLE_NAME, {
     updatedAt: timestamp('updated_at').notNull().defaultNow(),
 });
 
+export const EXPENSE_AMOUNT_TABLE_NAME = 'expenses_amounts';
+export const expensesAmounts = pgTable(EXPENSE_AMOUNT_TABLE_NAME,
+    {
+        expenseId: uuid('expense_id')
+            .notNull()
+            .references(() => expenses.id, {onDelete: 'cascade'}),
+        userId: uuid('user_id')
+            .notNull()
+            .references(() => users.id),
+        amount: numeric('amount', {precision: 7, scale: 2}).notNull(),
+    },
+    (table) => ({
+        pk: primaryKey({columns: [table.expenseId, table.userId]}),
+    }),
+);
+
 export const usersToGroupsRelations = relations(usersGroups, ({one}) => ({
     group: one(groups, {
         fields: [usersGroups.groupId],
@@ -129,3 +145,6 @@ export type SelectGroup = typeof groups.$inferSelect;
 
 export type InsertExpense = typeof expenses.$inferInsert;
 export type SelectExpense = typeof expenses.$inferSelect;
+
+export type InsertExpenseAmount = typeof expensesAmounts.$inferInsert;
+export type SelectExpenseAmount = typeof expensesAmounts.$inferSelect;

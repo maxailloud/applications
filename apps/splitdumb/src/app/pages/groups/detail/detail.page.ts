@@ -57,7 +57,7 @@ export class DetailPage {
     public group = input.required<GroupExtended>();
 
     public expenses = computed(() => {
-        return this.expenseStore.getAllExpenses()().get(this.group().id) ?? [];
+        return this.expenseStore.getExpenses(this.group().id) ?? [];
     });
 
     public refresh(event: RefresherCustomEvent): void {

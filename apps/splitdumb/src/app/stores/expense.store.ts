@@ -1,5 +1,6 @@
 import { Injectable, Signal, signal } from '@angular/core';
 import ExpenseExtended from '@interfaces/expense-extended';
+import { SelectExpense } from '@schema/schema';
 import { objectToCamel } from 'ts-case-convert';
 
 @Injectable({
@@ -19,7 +20,7 @@ export default class ExpenseStore {
         this.expenses.set(expenses);
     }
 
-    public addExpense(expense: ExpenseExtended): void {
+    public addExpense(expense: ExpenseExtended): SelectExpense {
         expense = objectToCamel(expense);
 
         this.expenses.update(expenses => {
@@ -33,5 +34,7 @@ export default class ExpenseStore {
 
             return new Map(expenses);
         });
+
+        return expense;
     }
 }

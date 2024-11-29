@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, input, OnInit, vi
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import CurrencySelectorComponent from '@components/input-currency-selector/input-currency-selector.component';
 import InputPayeeSelectorComponent from '@components/input-payee-selector/input-payee-selector.component';
+import ExpenseAmountDataService from '@data-services/expense-amount-data.service';
 import ExpenseDataService from '@data-services/expense-data.service';
 import ExpenseSplittingType from '@enums/expense-splitting-type.enum';
 import ModalStatus from '@enums/modal-status.enum';
@@ -56,6 +57,7 @@ export default class CreateExpenseComponent implements OnInit {
 
     private modalController = inject(ModalController);
     private expenseDataService = inject(ExpenseDataService);
+    private expenseAmountDataService = inject(ExpenseAmountDataService);
     private expenseStore = inject(ExpenseStore);
     private userStore = inject(UserStore);
 
@@ -112,7 +114,7 @@ export default class CreateExpenseComponent implements OnInit {
                 }
             }
 
-            const {data: expense, error} = await this.expenseDataService.createExpense({
+            const {data: expense, error: expenseError} = await this.expenseDataService.createExpense({
                 description: this.createExpenseForm.controls.description.value,
                 amount: this.createExpenseForm.controls.amount.value,
                 currency: this.createExpenseForm.controls.currency.value,
@@ -121,13 +123,29 @@ export default class CreateExpenseComponent implements OnInit {
                 groupId: this.group().id,
             });
 
-            if (error) {
-                console.error(error);
+            if (expenseError) {
+                console.error(expenseError);
             }
 
             if (expense) {
-                this.expenseStore.addExpense(expense);
-                void this.modalController.dismiss(expense, ModalStatus.DISMISS_CONFIRM);
+                const newExpense = this.expenseStore.addExpense(expense);
+                const groupMembers = [...this.group().members, this.group().creator];
+                const inExpenseUsers = groupMembers.filter(user => user.id !== newExpense.payeeId);
+                const amountPerUser = Number(newExpense.amount) / groupMembers.length;
+
+                for (const inExpenseUser of inExpenseUsers) {
+                    const {error: expenseAmountError} = await this.expenseAmountDataService.createExpenseAmount({
+                        expenseId: newExpense.id,
+                        userId: inExpenseUser.id,
+                        amount: amountPerUser.toString(),
+                    });
+
+                    if (expenseAmountError) {
+                        console.error(expenseAmountError);
+                    }
+                }
+
+                void this.modalController.dismiss(newExpense, ModalStatus.DISMISS_CONFIRM);
             }
         }
     }
