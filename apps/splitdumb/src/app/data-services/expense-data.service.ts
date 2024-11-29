@@ -23,7 +23,7 @@ export default class ExpenseDataService {
     public async readExpenses(groupId: string): Promise<PostgrestSingleResponse<ExpenseExtended[]>> {
         return this.supabaseClient
             .from(EXPENSE_TABLE_NAME)
-            .select('*, payee:user_profiles!payee_id(*)')
+            .select('*, payee:user_profiles!payee_id(*), shares:expenses_shares!expense_id(share, user:user_profiles!user_id(*))')
             .eq('group_id', groupId)
             .order('occurred_at', {ascending: false})
         ;
