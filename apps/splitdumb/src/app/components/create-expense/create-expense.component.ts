@@ -137,7 +137,7 @@ export default class CreateExpenseComponent implements OnInit {
                     const {error: expenseAmountError} = await this.expenseAmountDataService.createExpenseAmount({
                         expenseId: newExpense.id,
                         userId: inExpenseUser.id,
-                        amount: amountPerUser.toString(),
+                        share: amountPerUser.toString(),
                     });
 
                     if (expenseAmountError) {
